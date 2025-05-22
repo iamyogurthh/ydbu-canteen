@@ -3,7 +3,9 @@ import React from 'react'
 import { useShoppingCart } from '@/context/ShoppingCartContext'
 import MyCartSideBar from './MyCartSideBar'
 import Link from 'next/link'
+
 const NavbarLoggedInUser = () => {
+
   const { cartQuantity, openCart, closeCart, isOpen } = useShoppingCart()
   const quantity = cartQuantity
   return (

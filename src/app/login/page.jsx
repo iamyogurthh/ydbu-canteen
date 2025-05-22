@@ -1,6 +1,28 @@
-import React from 'react'
-
+'use client'
+import { useState } from 'react'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 const page = () => {
+  const [phNo, setPhNo] = useState('');
+  const [password, setPassword] = useState('');
+  const [error,setError] = useState('');
+  const router = useRouter();
+  console.log(phNo, password);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const res = await signIn('credentials', {
+      redirect: false,
+      ph_no: phNo,
+      password: password
+    })
+    if (res?.ok) {
+      router.push('/');
+    } else {
+      setError('Incorrect Phone number or Password')
+      console.log("error is ", res?.error)
+    }
+
+  }
   return (
     <div className="flex items-center justify-center mt-[117px]">
       <div className="bg-white px-[40px] pt-[40px] pb-[80px] rounded-[24px] shadow-lg">
@@ -14,7 +36,9 @@ const page = () => {
           </div>
         </div>
 
-        <form className="mt-[40px]">
+        <form className="mt-[40px]" onSubmit={handleLogin}
+        >
+          {error && <h1 className="text-[24px] bg-red-500 mb-[24px] text-white justify-center">{error}</h1>}
           <h1 className="text-[24px] text-accent underline mb-[24px]">Login</h1>
 
           <div className="flex flex-col mb-[24px]">
@@ -26,6 +50,7 @@ const page = () => {
               type="text"
               placeholder="Enter your Phone number *"
               className="border-[2px] border-[#777777] px-[16px] py-[13px] rounded"
+              onChange={e => setPhNo(e.target.value)}
             />
           </div>
 
@@ -38,6 +63,7 @@ const page = () => {
               type="password"
               placeholder="Enter your Password *"
               className="border-[2px] border-[#777777] px-[16px] py-[13px] rounded"
+              onChange={e => setPassword(e.target.value)}
             />
           </div>
 
@@ -50,7 +76,7 @@ const page = () => {
 
           <button
             type="submit"
-            className="bg-accent text-white w-full py-[12px] rounded text-[16px] font-semibold"
+            className="bg-accent text-white w-full py-[12px] rounded text-[16px] font-semibold cursor-pointer"
           >
             Login
           </button>

@@ -7,7 +7,7 @@ const CanteenCard = ({ canteen }) => (
     className="bg-white rounded-2xl shadow-md px-[8px] pt-[8px] pb-[24px] w-full"
   >
     <img
-      src={canteen.img}
+      src={canteen.profile_img}
       alt={canteen.name}
       className="w-full h-[200px] object-cover rounded-lg mb-[16px] shadow-sm"
     />

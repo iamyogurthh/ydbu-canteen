@@ -1,7 +1,8 @@
 import CanteenCard from '@/components/CanteenCard'
-import { canteens } from '@/sample_data/canteens'
 
-export default function Home() {
+export default async function Home() {
+  const data = await fetch('http://localhost:3000/api/canteens');
+  const canteens = await data.json();
   return (
     <div className="px-0 py-[80px] sm:px-4 md:px-6 lg:px-10 my-10">
       <h1 className="text-2xl font-medium mb-4">Canteens</h1>

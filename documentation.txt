@@ -1,0 +1,68 @@
+--------------------------------------------------API Document-----------------------------------------------
+
+Purpose = to get a list of Canteens
+URL = /api/canteens
+Method = GET
+Response = [
+    {
+        "id":1,
+        "name":"Delecious Kitchen",
+        "profile_img":"/canteen_img/canteen1.png"
+    },
+    {"id":2,"name":"Food Conner","profile_img":"/canteen_img/canteen2.png"},
+    {"id":3,"name":"U Shwe Yoe","profile_img":"/canteen_img/canteen3.png"},
+    ...
+]
+
+--------------------------------------------------
+
+Purpose = To Get "A Specific" Canteen along with its menus
+URL = /api/canteens/[canteen_id]
+Method = GET
+Response = {
+    "canteen": {
+        "id":1,
+        "name":"Delecious Kitchen",
+        "cover_img":"/sample_img/background.jpg",
+        "profile_img":"/canteen_img/canteen1.png"
+    },
+    "menus": [ 
+        {
+            "id":1,
+            "canteen_id":1,
+            "name":"Breakfast Combo Set 1",
+            "img":"/menu_img/food1.jpeg",
+            "price":3200
+        },
+        {
+            "id":7,
+            "canteen_id":1,
+            "name":"Chicken Rice",
+            "img":"/sample_img/menu.jpg",
+            "price":45
+        },
+        ...
+    ]
+}
+            
+
+--------------------------------------------------
+
+
+Purpose = To Get "A Specific" User
+URL = /api/users/[phone_no]
+Method = GET
+Response = {
+    "id":1,
+    "img":"/sample_img/user.jpg",
+    "role_id":3,
+    "ph_no":"0911111111",
+    "name":"Headmaster U Aung",
+    "nrc":"12/MaKaNa(N)123456",
+    "roll_no":"HM001",
+    "major":"Administration",
+    "current_address":"Yangon",
+    "password":"pass123"
+}
+
+----------------------------------------------------

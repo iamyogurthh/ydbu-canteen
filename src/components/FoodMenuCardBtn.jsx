@@ -2,15 +2,16 @@
 import { useShoppingCart } from '@/context/ShoppingCartContext'
 import React from 'react'
 
-const FoodMenuCardBtn = ({ foodId }) => {
+const FoodMenuCardBtn = ({ foodId, food, canteen_name }) => {
   const { increaseCartQuantity, decreaseCartQuantity, getItemQuantity } =
     useShoppingCart()
   const quantity = getItemQuantity(foodId)
+
   return (
     <div className="flex justify-center items-center">
       {quantity <= 0 ? (
         <button
-          onClick={() => increaseCartQuantity(foodId)}
+          onClick={() => increaseCartQuantity(foodId, food, canteen_name)}
           className="border-2 px-[20px] py-[6px] rounded-[24px] cursor-pointer "
         >
           <img src="/system_icons/cart.png" alt="cart" className="w-[24px]" />
@@ -18,7 +19,7 @@ const FoodMenuCardBtn = ({ foodId }) => {
       ) : (
         <div className="flex items-center justify-between gap-[16px]">
           <button
-            onClick={() => increaseCartQuantity(foodId)}
+            onClick={() => increaseCartQuantity(foodId, food, canteen_name)}
             className="text-[24px] cursor-pointer border px-[14px] py-[2px] rounded-[8px]"
           >
             +

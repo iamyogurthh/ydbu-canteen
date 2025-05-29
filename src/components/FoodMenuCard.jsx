@@ -1,7 +1,7 @@
 import React from 'react'
 import FoodMenuCardBtn from './FoodMenuCardBtn'
 
-const FoodMenuCard = ({ food }) => {
+const FoodMenuCard = ({ food, canteen_name }) => {
   return (
     <div className="bg-white rounded-2xl shadow-md px-[8px] pt-[8px] pb-[24px] w-full">
       <img
@@ -11,7 +11,11 @@ const FoodMenuCard = ({ food }) => {
       />
       <p className="text-base font-semibold">{food.name}</p>
       <p className="text-base font-medium mb-[16px]">{food.price} MMK</p>
-      <FoodMenuCardBtn foodId={food} />
+      <FoodMenuCardBtn
+        foodId={food.id}
+        food={food}
+        canteen_name={canteen_name}
+      />
     </div>
   )
 }

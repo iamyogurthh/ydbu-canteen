@@ -9,7 +9,6 @@ export function useShoppingCart() {
 
 export function ShoppingCartProvider({ children }) {
   const [cartItems, setCartItems] = useState([])
-  console.log(cartItems)
   const [isOpen, setIsOpen] = useState(false)
 
   const cartQuantity = cartItems.reduce(
@@ -21,10 +20,10 @@ export function ShoppingCartProvider({ children }) {
     return cartItems.find((item) => item.id === id)?.quantity || 0
   }
 
-  function increaseCartQuantity(id) {
+  function increaseCartQuantity(id, food, canteen_name) {
     setCartItems((currItem) => {
       if (currItem.find((item) => item.id === id) == null) {
-        return [...currItem, { id, quantity: 1 }]
+        return [...currItem, { id, quantity: 1, food, canteen_name }]
       } else {
         return currItem.map((item) => {
           if (item.id == id) {

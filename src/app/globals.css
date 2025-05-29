@@ -27,3 +27,7 @@ body {
 .overlay {
   @apply bg-[#2929299c] fixed top-0 bottom-0 right-0 left-0 z-[100];
 }
+
+.primary-btn {
+  @apply bg-[var(--accent)] text-white py-[13px] px-[54px] rounded-[24px] shadow-lg;
+}

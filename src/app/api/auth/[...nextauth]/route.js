@@ -2,7 +2,6 @@ import { getUserByPhone } from '@/models/user'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
-console.log('I am running file route.js')
 export const OPTIONS = {
   providers: [
     CredentialsProvider({

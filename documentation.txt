@@ -66,3 +66,20 @@ Response = {
 }
 
 ----------------------------------------------------
+
+Purpose = "To Register A User"
+URL = /api/auth/Register
+Method = POST
+FormData = 
+    ph_no,
+    name,
+    nrc,
+    roll_no,
+    major,
+    current_address,
+    password
+Response = {
+    message: 'User created successfully'
+}
+
+------------------------------------------------------------------------

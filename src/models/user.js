@@ -1,8 +1,34 @@
 import pool from "@/database/database";
 
-export async function getUserByPhone(phone){
+export async function getUserByPhone(phone) {
     const [user] = await pool.query(`
     SELECT * FROM User WHERE ph_no=?
-    `,[phone])
+    `, [phone])
     return user[0];
+}
+
+export async function getUserById(id){
+    const [user] = await pool.query(`
+    SELECT * FROM User WHERE id=?
+    `, [id])
+    return user[0];
+}
+
+export async function createUser({
+    ph_no,
+    name,
+    nrc,
+    roll_no,
+    major,
+    current_address,
+    password, }) {
+    const [result] = await pool.query(
+        `
+      INSERT INTO User (ph_no, name, nrc, roll_no, major, current_address, password)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+      `,
+        [ph_no, name, nrc, roll_no, major, current_address, password]
+    );
+
+    return result.insertId;
 }

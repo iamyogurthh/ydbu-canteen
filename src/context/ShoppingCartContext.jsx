@@ -78,6 +78,7 @@ export function ShoppingCartProvider({ children }) {
         cartItems,
         cartQuantity,
         isOpen,
+        setCartItems,
       }}
     >
       {children}

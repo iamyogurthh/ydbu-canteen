@@ -1,34 +1,43 @@
 'use client'
 
-import { useShoppingCart } from '@/context/ShoppingCartContext';
-import { useSession } from 'next-auth/react';
+import { useShoppingCart } from '@/context/ShoppingCartContext'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 const page = () => {
-  const { cartItems } = useShoppingCart();
-  const { data: session, status } = useSession();
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [major, setMajor] = useState('');
-  const [currentLocation, setCurrentLocation] = useState('');
-  const [note, setNote] = useState('');
+  const { cartItems, setCartItems } = useShoppingCart()
+  const { data: session, status } = useSession()
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [major, setMajor] = useState('')
+  const [currentLocation, setCurrentLocation] = useState('')
+  const [note, setNote] = useState('')
+  const router = useRouter()
   if (status == 'loading') {
-    return <p className='mt-20'>Loading...</p>
+    return <p className="mt-20">Loading...</p>
   }
 
   async function handleSubmit(event) {
     cartItems.push({
-      user_id: session.user.id, name, phone, major, current_location : currentLocation, special_request: note
+      user_id: session.user.id,
+      name,
+      phone,
+      major,
+      current_location: currentLocation,
+      special_request: note,
     })
-    console.log("This is from submit", cartItems)
-    console.log(name, phone, major, currentLocation, note);
-    event.preventDefault();
+    console.log('This is from submit', cartItems)
+    console.log(name, phone, major, currentLocation, note)
+    event.preventDefault()
     const res = await fetch('http://localhost:3000/api/orders', {
       method: 'POST',
-      body: JSON.stringify(cartItems)
+      body: JSON.stringify(cartItems),
     })
     if (res.ok) {
-      console.log("I am oking")
+      console.log('I am oking')
+      setCartItems([])
+      router.push('/')
     }
   }
   const formElementData = [
@@ -38,8 +47,8 @@ const page = () => {
       type: 'text',
       id: 'name',
       handleChange(e) {
-        setName(e.target.value);
-      }
+        setName(e.target.value)
+      },
     },
     {
       label: 'Phone',
@@ -47,8 +56,8 @@ const page = () => {
       type: 'phone',
       id: 'ph_no',
       handleChange(e) {
-        setPhone(e.target.value);
-      }
+        setPhone(e.target.value)
+      },
     },
     {
       label: 'Major',
@@ -56,8 +65,8 @@ const page = () => {
       type: 'text',
       id: 'major',
       handleChange(e) {
-        setMajor(e.target.value);
-      }
+        setMajor(e.target.value)
+      },
     },
     {
       label: 'Current Location',
@@ -66,8 +75,8 @@ const page = () => {
       id: 'address',
       custom_h: 'h-[120px]',
       handleChange(e) {
-        setCurrentLocation(e.target.value);
-      }
+        setCurrentLocation(e.target.value)
+      },
     },
     {
       label: 'Note',
@@ -76,8 +85,8 @@ const page = () => {
       id: 'note',
       custom_h: 'h-[120px]',
       handleChange(e) {
-        setNote(e.target.value);
-      }
+        setNote(e.target.value)
+      },
     },
   ]
 
@@ -88,7 +97,10 @@ const page = () => {
           <h1 className="text-[32px] font-medium text-accent">Checkout</h1>
         </div>
 
-        <form className="mt-[40px] flex flex-col items-center" onSubmit={handleSubmit}>
+        <form
+          className="mt-[40px] flex flex-col items-center"
+          onSubmit={handleSubmit}
+        >
           {formElementData.map((fe, index) => (
             <div key={index} className="flex flex-col mb-[24px]">
               <label htmlFor={fe.id} className="mb-[8px]">
@@ -100,8 +112,10 @@ const page = () => {
                   id={fe.id}
                   placeholder={fe.placeholder}
                   onChange={(e) => fe.handleChange(e)}
-                  className={`border-[2px] border-[#777777] px-[16px] py-[13px] rounded w-[400px] resize-none ${fe.custom_h ? `${fe.custom_h}` : 'h-[120px]'
-                    }`}
+                  className={`border-[2px] border-[#777777] px-[16px] py-[13px] rounded w-[400px] resize-none ${
+                    fe.custom_h ? `${fe.custom_h}` : 'h-[120px]'
+                  }`}
+                  required={fe.id === 'note'}
                 />
               ) : (
                 <input
@@ -109,8 +123,9 @@ const page = () => {
                   type={fe.type}
                   placeholder={fe.placeholder}
                   onChange={(e) => fe.handleChange(e)}
-                  className={`border-[2px] border-[#777777] px-[16px] py-[13px] rounded w-[400px] ${fe.custom_h ? `${fe.custom_h}` : ''
-                    }`}
+                  className={`border-[2px] border-[#777777] px-[16px] py-[13px] rounded w-[400px] ${
+                    fe.custom_h ? `${fe.custom_h}` : ''
+                  }`}
                 />
               )}
             </div>

@@ -5,6 +5,7 @@ import MyCartItemListTableItem from './MyCartItemListTableItem'
 
 const MyCartItemListTable = () => {
   const { cartItems } = useShoppingCart()
+  console.log(cartItems)
   return (
     <table className="w-full table-fixed">
       <thead className="border-t border-b">

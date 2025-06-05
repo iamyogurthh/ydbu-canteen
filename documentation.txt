@@ -1,5 +1,35 @@
 --------------------------------------------------API Document-----------------------------------------------
 
+
+------------------------------------------------Session Will Contain These Information------------------------------------------------------
+
+ user: {
+    id: 5,
+    name: 'Daw Mya',
+    role_id: 2,
+    canteen_id: 1,          // If He/She is a canteen owner
+    ph_no: '0922222222'
+},
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+
+--------------------------------------------------.env File Must Contain These Variable------------------------------------------------------
+
+ 
+MYSQL_USER = 
+MYSQL_PASSWORD =  
+MYSQL_HOST = 
+MYSQL_DATABASE = 
+NEXTAUTH_SECRET = fd$%$@*#$jkhfjs;f44#%$5456
+NEXTAUTH_URL = http://localhost:3000/
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+
 Purpose = to get a list of Canteens
 URL = /api/canteens
 Method = GET
@@ -83,3 +113,37 @@ Response = {
 }
 
 ------------------------------------------------------------------------
+
+----------------------------------------------------
+
+Purpose = "To Get A List Of User Which Are Belong To The Canteen"
+URL = /api/admin/canteens/[canteen_id]/orders/users
+Method = GET
+Response = [
+    {
+        "customer_id":6,
+        "name":"Ko Ko",
+        "phone":"0922222223",
+        "major":"Physics",
+        "location":"CTC3",
+        "status":"pending"
+    }
+    ,
+    ...
+]
+
+
+------------------------------------------------------------------------
+Purpose = "To Get A Specific Order That Is Belong To A User
+URL = /api/admin/canteens/[canteen_id]/orders/users/[user_id]
+Method = GET
+Response = [
+    {
+        "name":"Breakfast Combo Set 1",
+        "img":"/menu_img/food1.jpeg",
+        "quantity":1,
+        "price":"3200.00"
+    }
+    ,
+    ...
+]

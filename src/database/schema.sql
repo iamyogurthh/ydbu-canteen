@@ -7,11 +7,18 @@ CREATE TABLE Role(
     name VARCHAR(50) NOT NULL UNIQUE
 );
 
+CREATE TABLE Canteen(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) UNIQUE,
+    cover_img VARCHAR(255) DEFAULT '/sample_img/background.jpg',
+    profile_img VARCHAR(255) DEFAULT '/sample_img/canteen.jpg'
+);
 
 CREATE TABLE User (
     id INT AUTO_INCREMENT PRIMARY KEY,
     img VARCHAR(255) DEFAULT '/sample_img/user.jpg',
     role_id INT NOT NULL DEFAULT 1,
+    canteen_id INT DEFAULT NULL,
     ph_no VARCHAR(255) NOT NULL UNIQUE,
     name VARCHAR(255) NOT NULL,
     nrc VARCHAR(255) NOT NULL UNIQUE,
@@ -19,16 +26,11 @@ CREATE TABLE User (
     major VARCHAR(255) NOT NULL,
     current_address VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    FOREIGN KEY (role_id) REFERENCES Role(id) ON DELETE CASCADE
+    FOREIGN KEY (role_id) REFERENCES Role(id) ON DELETE CASCADE,
+    FOREIGN KEY (canteen_id) REFERENCES Canteen(id) ON DELETE SET NULL
 );
 
 
-CREATE TABLE Canteen(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) UNIQUE,
-    cover_img VARCHAR(255) DEFAULT '/sample_img/background.jpg',
-    profile_img VARCHAR(255) DEFAULT '/sample_img/canteen.jpg'
-);
 
 CREATE TABLE Menu(
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -80,17 +82,17 @@ INSERT INTO Role (id,name) VALUES
 (2,'canteen_owner'),
 (3,'master');
 
-INSERT INTO User (role_id, ph_no, name, nrc, roll_no, major, current_address, password) VALUES
-(3, '0911111111', 'Headmaster U Aung', '12/MaKaNa(N)123456', 'HM001', 'Administration', 'Yangon', 'pass123'),
-(2, '0922222222', 'Daw Mya', '12/MaKaNa(N)123457', 'T001', 'Math', 'Mandalay', 'pass123'),
-(2, '0922222223', 'Ko Ko', '12/MaKaNa(N)123458', 'T002', 'Physics', 'Yangon', 'pass123'),
-(2, '0922222224', 'Hla Hla', '12/MaKaNa(N)123459', 'T003', 'Chemistry', 'Naypyidaw', 'pass123'),
-(2, '0922222225', 'Moe Moe', '12/MaKaNa(N)123460', 'T004', 'Biology', 'Taunggyi', 'pass123'),
-(2, '0922222226', 'Aye Aye', '12/MaKaNa(N)123461', 'T005', 'English', 'Bago', 'pass123'),
-(2, '0922222227', 'Zaw Zaw', '12/MaKaNa(N)123462', 'T006', 'History', 'Pathein', 'pass123'),
-(1, '0933333331', 'Student Kyaw', '12/MaKaNa(N)123463', 'S001', 'IT', 'Yangon', 'pass123'),
-(1, '0933333332', 'Su', '12/MaKaNa(N)123464', 'S002', 'Engineering', 'Mandalay', 'pass123'),
-(1, '0933333333', 'Htet', '12/MaKaNa(N)123465', 'S003', 'Business', 'Magway', 'pass123');
+INSERT INTO User (role_id,canteen_id, ph_no, name, nrc, roll_no, major, current_address, password) VALUES
+(1, NULL, '0911111111', 'Headmaster U Aung', '12/MaKaNa(N)123456', 'HM001', 'Administration', 'Yangon', 'pass123'),
+(1, NULL, '0933333331', 'Student Kyaw', '12/MaKaNa(N)123463', 'S001', 'IT', 'Yangon', 'pass123'),
+(1, NULL, '0933333332', 'Su', '12/MaKaNa(N)123464', 'S002', 'Engineering', 'Mandalay', 'pass123'),
+(1, NULL, '0933333333', 'Htet', '12/MaKaNa(N)123465', 'S003', 'Business', 'Magway', 'pass123'),
+(2, 1, '0922222222', 'Daw Mya', '12/MaKaNa(N)123457', 'T001', 'Math', 'Mandalay', 'pass123'),
+(2, 2, '0922222223', 'Ko Ko', '12/MaKaNa(N)123458', 'T002', 'Physics', 'Yangon', 'pass123'),
+(2, 3, '0922222224', 'Hla Hla', '12/MaKaNa(N)123459', 'T003', 'Chemistry', 'Naypyidaw', 'pass123'),
+(2, 4, '0922222225', 'Moe Moe', '12/MaKaNa(N)123460', 'T004', 'Biology', 'Taunggyi', 'pass123'),
+(2, 5, '0922222226', 'Aye Aye', '12/MaKaNa(N)123461', 'T005', 'English', 'Bago', 'pass123'),
+(2, 6, '0922222227', 'Zaw Zaw', '12/MaKaNa(N)123462', 'T006', 'History', 'Pathein', 'pass123');
 
 CREATE TABLE Orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -98,7 +100,6 @@ CREATE TABLE Orders (
     name VARCHAR(100),
     phone VARCHAR(15),
     major VARCHAR(100),
-    current_location VARCHAR(255),
     special_request TEXT,       
     order_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
@@ -107,18 +108,22 @@ CREATE TABLE Orders (
 CREATE TABLE OrderItems (
     id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT,
-    canteen_name VARCHAR(100),
+    user_id INT,
+    canteen_id INT,
     menu_id INT,
     quantity INT,
     price DECIMAL(10,2),       
     total_price DECIMAL(10,2), 
+    current_location VARCHAR(255),
+    status ENUM('pending','delivered') DEFAULT 'pending',
     FOREIGN KEY (order_id) REFERENCES Orders(id) ON DELETE CASCADE,
-    FOREIGN KEY (canteen_name) REFERENCES Canteen(name) ON DELETE CASCADE,    
+    FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
+    FOREIGN KEY (canteen_id) REFERENCES Canteen(id) ON DELETE CASCADE,    
     FOREIGN KEY (menu_id) REFERENCES Menu(id) ON DELETE CASCADE
 );
 
-INSERT INTO Orders (user_id,name,phone,major,current_location,special_request)
-VALUES (1,"mg mg","092343143","CS","CTC-III","No Nan Nan Pin");
+INSERT INTO Orders (user_id,name,phone,major,special_request)
+VALUES (1,"mg mg","092343143","CS","No Nan Nan Pin");
 
-INSERT INTO OrderItems (order_id, canteen_name, menu_id, quantity, price, total_price)
-VALUES (1,'Delecious Kitchen', 1, 2,3200,6400);
+INSERT INTO OrderItems (current_location,order_id,user_id, canteen_id, menu_id, quantity, price, total_price)
+VALUES ("CTC3", 1,6,1, 1, 2,3200,6400);

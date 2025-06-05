@@ -1,24 +1,41 @@
-import { getServerSession } from 'next-auth'
-import React from 'react'
-import { OPTIONS } from '../api/auth/[...nextauth]/route'
+'use client'
+import React, { useEffect, useState } from 'react'
 import { redirect } from 'next/navigation'
+import { signOut, useSession } from 'next-auth/react'
 
-async function page() {
-  const session = await getServerSession(OPTIONS)
+function page() {
+  const [loading, setLoading] = useState(true);
+  const { data: session } = useSession();
+  const [user , setUser] = useState(null);
+  useEffect(() => {
+    if(!session){
+      return;
+    }
+    async function getUser() {
+      try {
+        setLoading(true);
+        const res = await fetch(
+          `http://localhost:3000/api/users/${session.user.ph_no}`
+        )
+        const data = await res.json()
+        setUser(data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error)
+        setLoading(false);
+      }
+    }
+    getUser()
+  }, [])
   if (!session) {
     redirect('/')
+    return null;
   }
 
-  let user = null
-  try {
-    const res = await fetch(
-      `http://localhost:3000/api/users/${session.user.ph_no}`
-    )
-    const data = await res.json()
-    user = data
-  } catch (error) {
-    console.log(error)
+  if (loading || !user) {
+    return <h1>Loading...</h1>
   }
+
 
   const tableRowElements = [
     {
@@ -61,7 +78,7 @@ async function page() {
           ))}
         </tbody>
       </table>
-      <button className="bg-accent text-white py-[10px] px-[68px] rounded-[24px] shadow-lg mt-[40px] cursor-pointer">
+      <button onClick={() => signOut({ redirect: '/' })} className="bg-accent text-white py-[10px] px-[68px] rounded-[24px] shadow-lg mt-[40px] cursor-pointer">
         Logout
       </button>
     </>

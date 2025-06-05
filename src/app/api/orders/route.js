@@ -10,13 +10,13 @@ export async function POST(req){
     const { user_id,name,phone,major,current_location,special_request} = data[data.length-1];
     const order_id = await getOrderId(user_id,name,phone,major,current_location,special_request);
     console.log(order_id);
-    for(let i=0 ;i <= data.length-2 ; i++){
-        ///console.log(data[i])
-        const canteen_name = data[i].canteen_name;
+    for(let i=0 ;i < data.length-2 ; i++){
+        console.log(data[i])
+        console.log("I am food ID",data[i].food.canteen_id)
+        const canteen_id = data[i].food.canteen_id;
         const menu_id = data[i].food.id;
         const quantity = data[i].quantity;
-        const putOrder = await insertOrderItems(order_id,canteen_name,menu_id,quantity);
-
+        const putOrder = await insertOrderItems(order_id,user_id,canteen_id,menu_id,quantity,current_location);
     }
     return Response.json({message : "Successfully Ordered"},{status : 200})
 }

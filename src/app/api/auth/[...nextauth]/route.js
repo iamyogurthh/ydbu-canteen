@@ -24,6 +24,7 @@ export const OPTIONS = {
         token.name = user.name
         token.role_id = user.role_id
         token.ph_no = user.ph_no
+        token.canteen_id = user.canteen_id;
       }
       return token
     },
@@ -33,9 +34,11 @@ export const OPTIONS = {
           id: token.sub,
           name: token.name,
           role_id: token.role_id,
+          canteen_id : token.canteen_id,
           ph_no: token.ph_no,
         }
       }
+      console.log(session);
       return session
     },
   },

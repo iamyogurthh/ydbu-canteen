@@ -1,7 +1,12 @@
 import pool from "@/database/database";
 
 export async function getCanteenById(id){
-    
+    const [canteen] = await pool.query( 
+        `
+            SELECT * FROM Canteen WHERE id=?
+        `,[id]
+    );
+    return canteen[0];
 }
 
 export async function getCanteenByName(canteen_name){
@@ -10,7 +15,7 @@ export async function getCanteenByName(canteen_name){
             SELECT * FROM Canteen WHERE name=?
         `,[canteen_name]
     );
-    return canteen;
+    return canteen[0];
 }
 
 export async function getCanteens(){

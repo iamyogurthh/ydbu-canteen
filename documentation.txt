@@ -116,7 +116,7 @@ Response = {
 
 ----------------------------------------------------
 
-Purpose = "To Get A List Of User Which Are Belong To The Canteen"
+Purpose = "To Get A List Of User Order Which Are Belong To The Canteen"
 URL = /api/admin/canteens/[canteen_id]/orders/users
 Method = GET
 Response = [

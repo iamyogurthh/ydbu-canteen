@@ -51,6 +51,7 @@ const MyCartSideBar = () => {
         <Link
           href={'/cart'}
           className="bg-accent text-white py-[13px] px-[54px] rounded-[24px] shadow-lg"
+          onClick={() => closeCart()}
         >
           Go To Cart
         </Link>

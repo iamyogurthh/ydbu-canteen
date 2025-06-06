@@ -1,5 +1,6 @@
 'use client'
 
+import FullScreenLoader from '@/components/FullScreenLoader'
 import { useShoppingCart } from '@/context/ShoppingCartContext'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -15,10 +16,13 @@ const page = () => {
   const [note, setNote] = useState('')
   const router = useRouter()
   if (status == 'loading') {
-    return <p className="mt-20">Loading...</p>
+    return <FullScreenLoader />
   }
 
+  console.log(cartItems)
+
   async function handleSubmit(event) {
+    event.preventDefault()
     cartItems.push({
       user_id: session.user.id,
       name,
@@ -29,7 +33,7 @@ const page = () => {
     })
     console.log('This is from submit', cartItems)
     console.log(name, phone, major, currentLocation, note)
-    event.preventDefault()
+
     const res = await fetch('http://localhost:3000/api/orders', {
       method: 'POST',
       body: JSON.stringify(cartItems),

@@ -4,45 +4,10 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import OrderDetailModal from '@/components/profile/shopDashboard/OrderDetailModal'
 
-const orders = [
-  {
-    name: 'Tester 1',
-    phone: '09423685350',
-    major: 'Computer Science',
-    location: 'CTC3',
-    status: 'Delivered',
-    items: [
-      {
-        name: 'Breakfast Combo Set 1',
-        quantity: 1,
-        price: '2500 MMK',
-        image: '/sample_img/food1.jpeg',
-      },
-    ],
-    total: '2500 MMK',
-  },
-  {
-    name: 'Tester 2',
-    phone: '09423685350',
-    major: 'Computer Science',
-    location: 'CTC3',
-    status: 'Delivered',
-    items: [
-      {
-        name: 'Breakfast Combo Set 1',
-        quantity: 1,
-        price: '2500 MMK',
-        image: '/sample_img/food1.jpeg',
-      },
-    ],
-    total: '2500 MMK',
-  },
-]
-
 const StatusBadge = ({ status }) => {
   const style = {
-    Delivered: 'bg-green-500 text-white',
-    Pending: 'bg-yellow-400 text-black',
+    delivered: 'bg-green-500 text-white',
+    pending: 'bg-yellow-400 text-black',
   }
   return (
     <span
@@ -53,9 +18,8 @@ const StatusBadge = ({ status }) => {
   )
 }
 
-const ShopDashboardTable = () => {
+const ShopDashboardTable = ({ orders, canteen_id }) => {
   const [selectedOrder, setSelectedOrder] = useState(null)
-
   return (
     <>
       <div className="overflow-x-auto border border-gray-300 rounded-[16px]">
@@ -107,6 +71,7 @@ const ShopDashboardTable = () => {
           order={selectedOrder}
           onClose={() => setSelectedOrder(null)}
           StatusBadge={StatusBadge}
+          canteen_id={canteen_id}
         />
       )}
     </>

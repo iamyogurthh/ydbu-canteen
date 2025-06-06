@@ -2,40 +2,40 @@
 import React, { useEffect, useState } from 'react'
 import { redirect } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
+import FullScreenLoader from '@/components/FullScreenLoader'
 
 function page() {
-  const [loading, setLoading] = useState(true);
-  const { data: session } = useSession();
-  const [user , setUser] = useState(null);
+  const [loading, setLoading] = useState(true)
+  const { data: session } = useSession()
+  const [user, setUser] = useState(null)
   useEffect(() => {
-    if(!session){
-      return;
+    if (!session) {
+      return
     }
     async function getUser() {
       try {
-        setLoading(true);
+        setLoading(true)
         const res = await fetch(
           `http://localhost:3000/api/users/${session.user.ph_no}`
         )
         const data = await res.json()
-        setUser(data);
-        setLoading(false);
+        setUser(data)
+        setLoading(false)
       } catch (error) {
         console.log(error)
-        setLoading(false);
+        setLoading(false)
       }
     }
     getUser()
   }, [])
   if (!session) {
     redirect('/')
-    return null;
+    return null
   }
 
   if (loading || !user) {
-    return <h1>Loading...</h1>
+    return <FullScreenLoader />
   }
-
 
   const tableRowElements = [
     {
@@ -78,7 +78,10 @@ function page() {
           ))}
         </tbody>
       </table>
-      <button onClick={() => signOut({ redirect: '/' })} className="bg-accent text-white py-[10px] px-[68px] rounded-[24px] shadow-lg mt-[40px] cursor-pointer">
+      <button
+        onClick={() => signOut({ redirect: '/' })}
+        className="bg-accent text-white py-[10px] px-[68px] rounded-[24px] shadow-lg mt-[40px] cursor-pointer"
+      >
         Logout
       </button>
     </>

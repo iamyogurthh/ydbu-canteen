@@ -1,28 +1,48 @@
 'use client'
+import FullScreenLoader from '@/components/FullScreenLoader'
+import React, { useEffect, useState } from 'react'
 
-import React from 'react'
-
-const OrderDetailModal = ({ order, onClose, StatusBadge }) => {
+const OrderDetailModal = ({ order, onClose, StatusBadge, canteen_id }) => {
   if (!order) return null
 
+  const [orderItems, setOrderItems] = useState([])
+  const [loading, setLoading] = useState(true)
+
   const tableRowElements = [
-    {
-      label: 'Name',
-      value: 'Sai Eain Khant',
-    },
-    {
-      label: 'Phone',
-      value: '0913221321',
-    },
-    {
-      label: 'Major',
-      value: 'Computer Science',
-    },
-    {
-      label: 'Location',
-      value: 'CTC4',
-    },
+    { label: 'Name', value: order.name },
+    { label: 'Phone', value: order.phone },
+    { label: 'Major', value: order.major },
+    { label: 'Location', value: order.location },
   ]
+
+  const totalPrice = orderItems.reduce((sum, item) => {
+    return sum + item.price * item.quantity
+  }, 0)
+
+  useEffect(() => {
+    if (!order || !canteen_id) return
+
+    const getOrderItems = async () => {
+      try {
+        setLoading(true)
+        const res = await fetch(
+          `/api/admin/canteens/${canteen_id}/orders/users/${order.customer_id}`
+        )
+        const data = await res.json()
+        setOrderItems(data)
+      } catch (err) {
+        console.error('Error fetching order items:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    getOrderItems()
+  }, [order, canteen_id])
+
+  if (loading) {
+    return <FullScreenLoader />
+  }
 
   return (
     <div className="fixed inset-0 bg-[#00000046] bg-opacity-50 flex justify-center items-center z-50">
@@ -55,11 +75,11 @@ const OrderDetailModal = ({ order, onClose, StatusBadge }) => {
         <div className="flex items-center justify-center">
           <h3 className="font-bold text-[24px] text-red-600">
             Total Price:{' '}
-            <span className="text-black font-semibold">{order.total}</span>
+            <span className="text-black font-semibold">{totalPrice} MMK</span>
           </h3>
         </div>
 
-        <div className=" mt-[24px] flex items-center justify-center">
+        <div className="mt-[24px] flex items-center justify-center">
           <h4 className="font-semibold">Ordered Items List</h4>
         </div>
 
@@ -72,13 +92,14 @@ const OrderDetailModal = ({ order, onClose, StatusBadge }) => {
             </tr>
           </thead>
           <tbody>
-            {order.items.map((item, idx) => (
+            {orderItems.map((item, idx) => (
               <tr key={idx} className="bg-red-100">
                 <td className="p-2 flex items-center space-x-2">
                   <img
-                    src={item.image}
-                    alt=""
+                    src={item.img || '/fallback.png'}
+                    alt={item.name || 'Item'}
                     className="w-[75px] h-[56px] rounded-[8px] object-cover"
+                    onError={(e) => (e.target.src = '/fallback.png')}
                   />
                   <span>{item.name}</span>
                 </td>

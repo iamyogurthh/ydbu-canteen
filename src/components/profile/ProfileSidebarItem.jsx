@@ -21,17 +21,10 @@ const ProfileSidebarItem = ({ role_id }) => {
       active_img: '/system_icons/chart-active.png',
     },
     {
-      path: '/addmenu',
-      label: 'Add Menu',
-      img: '/system_icons/fork.png',
-      active_img: '/system_icons/fork-active.png',
-    },
-    {
-      path: '/myshop', //I need canteen id for associated owner to redirect to the canteen detail page
-      //right now we don't have relationship between canteen and its owner in database
+      path: '/myshop',
       label: 'My Shop',
       img: '/system_icons/shop.png',
-      active_img: '/system_icons/shop_active.png',
+      active_img: '/system_icons/shop-active.png',
     },
   ]
 

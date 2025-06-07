@@ -1,6 +1,7 @@
 import pool from "@/database/database";
 import { getUserById } from "./user";
 import { getMenuById } from "./menu";
+import { getOrderById } from "./order";
 
 export async function getOrderItemsByCanteenId(id) {
     const [items] = await pool.query(
@@ -11,19 +12,28 @@ export async function getOrderItemsByCanteenId(id) {
     return items;
 }
 
+async function getDifferentOrderId(canteen_id){
+    const [orderIds] = await pool.query(
+        `
+            SELECT DISTINCT order_id FROM orderItems WHERE canteen_id=?;
+        `,[canteen_id]
+    )
+    return orderIds;
+}
+
 export async function getOrderUsers(canteen_id) {
-    const orderItems = await getOrderItemsByCanteenId(canteen_id);
+    const orderItems = await getDifferentOrderId(canteen_id);
     const users = [];
     for (let i = 0; i < orderItems.length; i++) {
-        const user = await getUserById(orderItems[i].user_id);
+        const orderDetail = await getOrderById(orderItems[i].order_id);
         users.push({
-            customer_id: user.id,
-            name : user.name,
-            phone: user.ph_no,
-            major: user.major,
-            location: orderItems[i].current_location,
-            status : orderItems[i].status,
-        })
+            customer_id : orderDetail.user_id,
+            name : orderDetail.name,
+            phone: orderDetail.phone,
+            major: orderDetail.major,
+            location: orderDetail.current_location,
+            status : orderDetail.status,
+        }) 
     }
     return users;
 

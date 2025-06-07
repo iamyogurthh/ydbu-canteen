@@ -16,7 +16,7 @@ export async function POST(req){
         const canteen_id = data[i].food.canteen_id;
         const menu_id = data[i].food.id;
         const quantity = data[i].quantity;
-        const putOrder = await insertOrderItems(order_id,user_id,canteen_id,menu_id,quantity,current_location);
+        const putOrder = await insertOrderItems(order_id,user_id,canteen_id,menu_id,quantity);
     }
     return Response.json({message : "Successfully Ordered"},{status : 200})
 }

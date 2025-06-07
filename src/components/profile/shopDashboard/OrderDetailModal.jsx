@@ -24,6 +24,7 @@ const OrderDetailModal = ({ order, onClose, StatusBadge, canteen_id }) => {
 
     const getOrderItems = async () => {
       try {
+        console.log("canteenid is",canteen_id,order.customer_id) 
         setLoading(true)
         const res = await fetch(
           `/api/admin/canteens/${canteen_id}/orders/users/${order.customer_id}`

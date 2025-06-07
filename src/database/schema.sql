@@ -100,7 +100,9 @@ CREATE TABLE Orders (
     name VARCHAR(100),
     phone VARCHAR(15),
     major VARCHAR(100),
-    special_request TEXT,       
+    current_location VARCHAR(255),
+    special_request TEXT,  
+    status ENUM('pending','delivered') DEFAULT 'pending',     
     order_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );
@@ -114,16 +116,14 @@ CREATE TABLE OrderItems (
     quantity INT,
     price DECIMAL(10,2),       
     total_price DECIMAL(10,2), 
-    current_location VARCHAR(255),
-    status ENUM('pending','delivered') DEFAULT 'pending',
     FOREIGN KEY (order_id) REFERENCES Orders(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
     FOREIGN KEY (canteen_id) REFERENCES Canteen(id) ON DELETE CASCADE,    
     FOREIGN KEY (menu_id) REFERENCES Menu(id) ON DELETE CASCADE
 );
 
-INSERT INTO Orders (user_id,name,phone,major,special_request)
-VALUES (1,"mg mg","092343143","CS","No Nan Nan Pin");
+INSERT INTO Orders (current_location,user_id,name,phone,major,special_request)
+VALUES ("CTCIII",1,"mg mg","092343143","CS","No Nan Nan Pin");
 
-INSERT INTO OrderItems (current_location,order_id,user_id, canteen_id, menu_id, quantity, price, total_price)
-VALUES ("CTC3", 1,6,1, 1, 2,3200,6400);
+INSERT INTO OrderItems (order_id,user_id, canteen_id, menu_id, quantity, price, total_price)
+VALUES (1,1,1, 1, 2,3200,6400);

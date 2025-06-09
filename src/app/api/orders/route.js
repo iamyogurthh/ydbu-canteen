@@ -10,7 +10,7 @@ export async function POST(req){
     const { user_id,name,phone,major,current_location,special_request} = data[data.length-1];
     const order_id = await getOrderId(user_id,name,phone,major,current_location,special_request);
     console.log(order_id);
-    for(let i=0 ;i < data.length-2 ; i++){
+    for(let i=0 ;i < data.length-1 ; i++){
         console.log(data[i])
         console.log("I am food ID",data[i].food.canteen_id)
         const canteen_id = data[i].food.canteen_id;

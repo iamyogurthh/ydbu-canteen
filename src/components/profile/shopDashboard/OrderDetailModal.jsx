@@ -30,6 +30,7 @@ const OrderDetailModal = ({ order, onClose, StatusBadge, canteen_id }) => {
           `/api/admin/canteens/${canteen_id}/orders/users/${order.customer_id}`
         )
         const data = await res.json()
+        console.log("This is the order item frontend",data)
         setOrderItems(data)
       } catch (err) {
         console.error('Error fetching order items:', err)

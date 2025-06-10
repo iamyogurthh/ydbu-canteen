@@ -27,7 +27,7 @@ export async function getOrderUsers(canteen_id) {
     for (let i = 0; i < orderItems.length; i++) {
         const orderDetail = await getOrderById(orderItems[i].order_id);
         users.push({
-            customer_id : orderDetail.user_id,
+            customer_id : orderItems[i].order_id,
             name : orderDetail.name,
             phone: orderDetail.phone,
             major: orderDetail.major,
@@ -40,12 +40,12 @@ export async function getOrderUsers(canteen_id) {
 }
 
 
-export async function getOrdersByUserIdAndCanteenId(user_id,canteen_id){
-    console.log("I am user and canteen",canteen_id,user_id)
+export async function getOrdersByOrderIdAndCanteenId(order_id,canteen_id){
+    console.log("I am order and canteen",order_id,canteen_id)
     const [orders] = await pool.query(
         `
-        SELECT * FROM orderItems WHERE user_id=? and canteen_id=?
-        `,[user_id,canteen_id]
+        SELECT * FROM orderItems WHERE order_id=? and canteen_id=?
+        `,[order_id,canteen_id]
     );
     const orderDetails = [];
     for(let i=0; i < orders.length ; i++){

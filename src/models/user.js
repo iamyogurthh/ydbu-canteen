@@ -32,3 +32,32 @@ export async function createUser({
 
     return result.insertId;
 }
+
+export async function updateUser(id,ph_no,
+    name,
+    img,
+    nrc,
+    roll_no,
+    major,
+    current_address,
+    password){
+        const isok = await pool.query(
+            `
+            UPDATE User SET
+            img = ?,
+            ph_no = ?,
+            name = ?,
+            nrc = ?,
+            roll_no = ?,
+            major = ?,
+            current_address = ?,
+            password = ?
+            WHERE id = ?;
+
+            `,[img,ph_no,name,nrc,roll_no,major,current_address,password,id]
+        )
+        if(isok){
+            return true;
+        }
+        return false;
+    }

@@ -1,4 +1,5 @@
 import { getUserByPhone } from "@/models/user";
+import { handleImageEdit } from "@/utils/backendUtils";
 import { NextResponse } from "next/server";
 
 export async function GET(request, { params }) {
@@ -9,3 +10,4 @@ export async function GET(request, { params }) {
     }
     return NextResponse.json({ message: "Can't find User " }, { status: 404 });
 }
+

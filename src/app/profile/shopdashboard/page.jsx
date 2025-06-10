@@ -15,7 +15,7 @@ const ShopDashboardPage = async () => {
     .then((data) => data)
 
   return (
-    <div className="w-full">
+    <div className="pt-[40px] px-[40px]">
       <div className="flex justify-center mb-4">
         <SearchBox />
       </div>

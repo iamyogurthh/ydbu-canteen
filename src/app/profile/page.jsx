@@ -65,8 +65,8 @@ function page() {
   ]
 
   return (
-    <>
-      <h1 className="font-bold text-[24px] mb-[24px]">My Profile</h1>
+    <div className="pl-[40px] pt-[40px]">
+      <h1 className="font-bold text-[24px] mb-[24px] ">My Profile</h1>
       <img src={user.img} alt="user-img" className="w-[152px] mb-[40px]" />
       <table>
         <tbody>
@@ -84,7 +84,7 @@ function page() {
       >
         Logout
       </button>
-    </>
+    </div>
   )
 }
 

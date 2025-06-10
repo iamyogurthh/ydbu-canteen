@@ -5,7 +5,7 @@ const layout = ({ children }) => {
   return (
     <div className="flex pt-[70px] ">
       <ProfileSidebar />
-      <div className="pl-[320px] pr-[40px] pt-[40px] w-full">{children}</div>
+      <div className="pl-[280px]  w-full">{children}</div>
     </div>
   )
 }

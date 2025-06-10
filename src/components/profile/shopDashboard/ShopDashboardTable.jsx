@@ -38,7 +38,7 @@ const ShopDashboardTable = ({ orders, canteen_id }) => {
             {orders.map((order, idx) => (
               <tr
                 key={idx}
-                className="hover:bg-gray-100 cursor-pointer"
+                className="hover:bg-gray-100 cursor-pointer odd:bg-[#d7222217]"
                 onClick={(e) => {
                   if (e.target.closest('.action-cell')) return
                   setSelectedOrder(order)

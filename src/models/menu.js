@@ -19,11 +19,11 @@ export async function getMenuById(id){
 
 //--------------------Create Section------------------------
 
-export async function createMenu(canteen_id, name, img, price){
+export async function createMenu(canteen_id, name,quantity, img, price){
     const isok = await pool.query(
         `
-            INSERT INTO Menu (canteen_id,name,img,price) VALUES (?,?,?,?)
-        `,[canteen_id,name,img,price]
+            INSERT INTO Menu (canteen_id,name,quantity,img,price) VALUES (?,?,?,?,?)
+        `,[canteen_id,name,quantity,img,price]
     )
     if(isok){
         return true;
@@ -31,18 +31,34 @@ export async function createMenu(canteen_id, name, img, price){
     return false;
 }
 
-export async function updateMenu(id,name,img,price){
+export async function updateMenu(id,name,quantity,img,price){
     const isok = await pool.query(
     `   
         UPDATE Menu SET
         name = ?,
+        quantity = ?,
         img = ?,
         price = ?
         WHERE id = ?;
-    `,[name,img,price,id]
+    `,[name,quantity,img,price,id]
     );
     if(isok){
         return true;
     }
     return false;
+}
+
+export async function checkMenuAvailability(menu_id,quantity){
+    const [menu] = await pool.query(
+        `
+        SELECT * FROM MENU WHERE id=?
+        `,[menu_id]
+    );
+    if(!menu){
+        return false;
+    }
+    if(menu[0].quantity < quantity){
+        return false;
+    }
+    return true;
 }

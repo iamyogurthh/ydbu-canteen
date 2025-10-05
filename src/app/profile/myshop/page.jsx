@@ -23,7 +23,7 @@ const page = async () => {
           className="w-[304px] h-[171px] object-cover absolute bottom-[-40px] shadow-md rounded-[8px] left-[40px]"
         />
         <Link
-          href={'/editprofile'}
+          href={'/profile/myshop/editprofile'}
           className="bg-accent absolute top-[24px]  right-[40px] flex items-center px-[16px] py-[4px] rounded-[24px] shadow-md"
         >
           <p className="mr-[8px] font-bold text-white">Edit</p>
@@ -40,7 +40,7 @@ const page = async () => {
             Total Number of Menu: {allData.menus.length}{' '}
           </p>
           <Link
-            href={'/addmenu'}
+            href={'/profile/myshop/addmenu'}
             className="bg-accent flex items-center px-[24px] py-[8px] rounded-[24px] shadow-md"
           >
             <p className="mr-[8px] font-bold text-white">Add Menu</p>

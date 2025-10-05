@@ -3,8 +3,6 @@ import Link from 'next/link'
 import MenuItemDetailModal from './MenuItemDetailModal'
 
 const MyShopTable = ({ menuItems }) => {
-  //   const [selectedMenu, setselectedMenu] = useState(null)
-  console.log(menuItems)
   return (
     <>
       <div className="overflow-x-auto border border-gray-300 rounded-[16px] mt-[16px]">
@@ -18,15 +16,8 @@ const MyShopTable = ({ menuItems }) => {
             </tr>
           </thead>
           <tbody>
-            {menuItems.map((item, idx) => (
-              <tr
-                key={idx}
-                className="hover:bg-gray-100 cursor-pointer odd:bg-[#d7222217]"
-                // onClick={(e) => {
-                //   if (e.target.closest('.action-cell')) return
-                //   setSelectedOrder(order)
-                // }}
-              >
+            {menuItems.reverse().map((item, idx) => (
+              <tr key={idx} className="hover:bg-gray-100 odd:bg-[#d7222217]">
                 <td className="px-4 py-2">
                   <img
                     src={item.img}
@@ -37,30 +28,23 @@ const MyShopTable = ({ menuItems }) => {
                 <td className="px-4 py-2">{item.name}</td>
                 <td className="px-4 py-2">{item.price} MMK</td>
                 <td className="px-4 py-2  space-x-2 action-cell">
-                  <div className="flex items-center">
-                    <Link href="#">
-                      <img
-                        src="/system_icons/pen-to-square-black.png"
-                        className="w-[24px] mr-[8px]"
-                        alt="edit"
-                      />
-                    </Link>
+                  <Link
+                    href={`/profile/myshop/editmenu?id=${item.id}`}
+                    className="flex items-center h-full"
+                  >
+                    <img
+                      src="/system_icons/pen-to-square-black.png"
+                      className="w-[24px] mr-[8px]"
+                      alt="edit"
+                    />
                     <p className="font-bold">Edit Menu</p>
-                  </div>
+                  </Link>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
-      {/* {selectedMenu && (
-        <MenuItemDetailModal
-          order={selectedOrder}
-          onClose={() => setselectedMenu(null)}
-          canteen_id={canteen_id}
-        />
-      )} */}
     </>
   )
 }

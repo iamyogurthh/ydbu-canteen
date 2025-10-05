@@ -1,5 +1,4 @@
 import FoodMenuCard from '@/components/FoodMenuCard'
-import { canteens } from '@/sample_data/canteens'
 import Link from 'next/link'
 import React from 'react'
 
@@ -8,7 +7,7 @@ const page = async ({ params }) => {
   const data = await fetch(`http://localhost:3000/api/canteens/${canteenId}`)
   const allData = await data.json()
   return (
-    <div className="pt-[60px]">
+    <div className="pt-[60px] pb-[40px]">
       <div className="relative">
         <img
           src={allData.canteen.cover_img}
@@ -33,7 +32,7 @@ const page = async ({ params }) => {
         <div className="mt-[32px]">
           <h1 className="text-[24px] font-medium mb-[16px]">Available Menus</h1>
           <div className="responsive-grid">
-            {allData.menus.map((food, index) => (
+            {allData.menus.reverse().map((food, index) => (
               <FoodMenuCard
                 key={index}
                 food={food}

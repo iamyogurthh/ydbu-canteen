@@ -20,6 +20,7 @@ const StatusBadge = ({ status }) => {
 
 const ShopDashboardTable = ({ orders, canteen_id }) => {
   const [selectedOrder, setSelectedOrder] = useState(null)
+
   return (
     <>
       <div className="overflow-x-auto border border-gray-300 rounded-[16px]">

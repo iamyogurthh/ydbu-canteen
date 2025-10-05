@@ -5,7 +5,7 @@ import { signOut, useSession } from 'next-auth/react'
 import FullScreenLoader from '@/components/FullScreenLoader'
 
 function page() {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const { data: session } = useSession()
   const [user, setUser] = useState(null)
   useEffect(() => {

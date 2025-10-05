@@ -1,16 +1,24 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect, useState } from 'react'
 import ProfileSidebarItem from './ProfileSidebarItem'
-import { OPTIONS } from '@/app/api/auth/[...nextauth]/route'
-import { redirect } from 'next/navigation'
-import { getServerSession } from 'next-auth'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import FullScreenLoader from '../FullScreenLoader'
 
-const ProfileSidebar = async () => {
-  const session = await getServerSession(OPTIONS)
-  if (!session) {
-    redirect('/')
-  }
+const ProfileSidebar = () => {
+  const { data: session, status } = useSession()
+  const router = useRouter()
 
-  console.log(session)
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/')
+    }
+  }, [status, router])
+
+  if (status === 'loading') return <FullScreenLoader /> // or a loader
+
+  if (!session) return null
 
   return (
     <div className="bg-white fixed top-0 bottom-0 w-[280px] shadow-md px-[16px] pt-[100px] flex flex-col items-center">

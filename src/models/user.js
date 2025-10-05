@@ -18,16 +18,14 @@ export async function createUser({
     ph_no,
     name,
     nrc,
-    roll_no,
-    major,
     current_address,
     password, }) {
     const [result] = await pool.query(
         `
-      INSERT INTO User (ph_no, name, nrc, roll_no, major, current_address, password)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO User (ph_no, name, nrc, current_address, password)
+      VALUES (?, ?, ?, ?, ?)
       `,
-        [ph_no, name, nrc, roll_no, major, current_address, password]
+        [ph_no, name, nrc, current_address, password]
     );
 
     return result.insertId;
@@ -37,8 +35,6 @@ export async function updateUser(id,ph_no,
     name,
     img,
     nrc,
-    roll_no,
-    major,
     current_address,
     password){
         const isok = await pool.query(
@@ -48,13 +44,11 @@ export async function updateUser(id,ph_no,
             ph_no = ?,
             name = ?,
             nrc = ?,
-            roll_no = ?,
-            major = ?,
             current_address = ?,
             password = ?
             WHERE id = ?;
 
-            `,[img,ph_no,name,nrc,roll_no,major,current_address,password,id]
+            `,[img,ph_no,name,nrc,current_address,password,id]
         )
         if(isok){
             return true;

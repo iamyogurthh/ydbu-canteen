@@ -38,7 +38,7 @@ const page = () => {
         body: formData,
       })
 
-      router.push('/profile/myshop')
+      router.push('/canteenOwner/myshop')
       setIsLoading(false)
     } catch (error) {
       console.log(error)

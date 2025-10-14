@@ -29,7 +29,7 @@ const MyShopTable = ({ menuItems }) => {
                 <td className="px-4 py-2">{item.price} MMK</td>
                 <td className="px-4 py-2  space-x-2 action-cell">
                   <Link
-                    href={`/profile/myshop/editmenu?id=${item.id}`}
+                    href={`/canteenOwner/myshop/editmenu?id=${item.id}`}
                     className="flex items-center h-full"
                   >
                     <img

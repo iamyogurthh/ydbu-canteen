@@ -93,7 +93,7 @@ const Page = () => {
 
       if (!res.ok) throw new Error('Failed to update profile')
 
-      router.push('/profile/myshop')
+      router.push('/canteenOwner/myshop')
       setIsLoading(false)
     } catch (error) {
       console.error(error)

@@ -2,27 +2,38 @@
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-const page = () => {
-  const [phNo, setPhNo] = useState('');
-  const [password, setPassword] = useState('');
-  const [error,setError] = useState('');
-  const router = useRouter();
-  console.log(phNo, password);
+
+const Page = () => {
+  const [phNo, setPhNo] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const router = useRouter()
+
   const handleLogin = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
+
     const res = await signIn('credentials', {
       redirect: false,
       ph_no: phNo,
-      password: password
+      password: password,
     })
+
     if (res?.ok) {
-      router.push('/');
+      // ✅ Fetch the session after successful sign-in
+      const sessionRes = await fetch('/api/auth/session')
+      const session = await sessionRes.json()
+
+      if (session?.user?.role_id === 2) {
+        router.push('/canteenOwner') // redirect canteen owner
+      } else {
+        router.push('/') // redirect normal users
+      }
     } else {
       setError('Incorrect Phone number or Password')
-      console.log("error is ", res?.error)
+      console.log('error is ', res?.error)
     }
-
   }
+
   return (
     <div className="flex items-center justify-center mt-[117px]">
       <div className="bg-white px-[40px] pt-[40px] pb-[80px] rounded-[24px] shadow-lg">
@@ -36,9 +47,12 @@ const page = () => {
           </div>
         </div>
 
-        <form className="mt-[40px]" onSubmit={handleLogin}
-        >
-          {error && <h1 className="text-[24px] bg-red-500 mb-[24px] text-white justify-center">{error}</h1>}
+        <form className="mt-[40px]" onSubmit={handleLogin}>
+          {error && (
+            <h1 className="text-[24px] bg-red-500 mb-[24px] text-white text-center rounded">
+              {error}
+            </h1>
+          )}
           <h1 className="text-[24px] text-accent underline mb-[24px]">Login</h1>
 
           <div className="flex flex-col mb-[24px]">
@@ -50,7 +64,7 @@ const page = () => {
               type="text"
               placeholder="Enter your Phone number *"
               className="border-[2px] border-[#777777] px-[16px] py-[13px] rounded"
-              onChange={e => setPhNo(e.target.value)}
+              onChange={(e) => setPhNo(e.target.value)}
             />
           </div>
 
@@ -63,7 +77,7 @@ const page = () => {
               type="password"
               placeholder="Enter your Password *"
               className="border-[2px] border-[#777777] px-[16px] py-[13px] rounded"
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
@@ -96,4 +110,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

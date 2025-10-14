@@ -61,7 +61,7 @@ const Page = () => {
 
       if (!res.ok) throw new Error('Failed to update menu')
 
-      router.push('/profile/myshop')
+      router.push('/canteenOwner/myshop')
     } catch (error) {
       console.log(error)
     } finally {

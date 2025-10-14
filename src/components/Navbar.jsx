@@ -6,8 +6,7 @@ import NavbarLoggedInUser from './NavbarLoggedInUser'
 import { useSession } from 'next-auth/react'
 
 const Navbar = () => {
-  
-  const {data : session} = useSession();
+  const { data: session } = useSession()
   return (
     <div className="bg-white px-[40px] py-[16px] shadow-lg flex items-center justify-between fixed top-0 left-0 right-0 z-50">
       <Link href={'/'} className="text-accent text-[24px] font-bold">
@@ -25,7 +24,7 @@ const Navbar = () => {
             Login
           </Link>
         ) : (
-          <NavbarLoggedInUser />
+          session.user.role_id == 1 && <NavbarLoggedInUser />
         )}
       </div>
     </div>

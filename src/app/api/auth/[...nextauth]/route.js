@@ -11,7 +11,13 @@ export const OPTIONS = {
         console.log(credentials)
         const user = await getUserByPhone(credentials.ph_no)
         if (user && user.password === credentials.password) {
-          return user
+          return {
+            id: user.id,
+            name: user.name,
+            role_id: user.role_id,
+            canteen_id: user.canteen_id,
+            ph_no: user.ph_no,
+          }
         }
         return null
       },
@@ -24,7 +30,7 @@ export const OPTIONS = {
         token.name = user.name
         token.role_id = user.role_id
         token.ph_no = user.ph_no
-        token.canteen_id = user.canteen_id;
+        token.canteen_id = user.canteen_id
       }
       return token
     },
@@ -34,11 +40,11 @@ export const OPTIONS = {
           id: token.sub,
           name: token.name,
           role_id: token.role_id,
-          canteen_id : token.canteen_id,
+          canteen_id: token.canteen_id,
           ph_no: token.ph_no,
         }
       }
-      console.log(session);
+      console.log(session)
       return session
     },
   },

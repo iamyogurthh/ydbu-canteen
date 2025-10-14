@@ -25,6 +25,8 @@ const Page = () => {
 
       if (session?.user?.role_id === 2) {
         router.push('/canteenOwner') // redirect canteen owner
+      } else if (session?.user?.role_id === 3) {
+        router.push('/admin')
       } else {
         router.push('/') // redirect normal users
       }

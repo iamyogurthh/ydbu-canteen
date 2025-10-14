@@ -7,7 +7,8 @@ import { usePathname } from 'next/navigation'
 
 export default function RootLayout({ children }) {
   const pathname = usePathname()
-  const hideNav = pathname.startsWith('/canteenOwner')
+  const hideNav =
+    pathname.startsWith('/canteenOwner') || pathname.startsWith('/admin')
   return (
     <html lang="en">
       <body className="relative">

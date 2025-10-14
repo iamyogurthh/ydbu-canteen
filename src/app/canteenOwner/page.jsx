@@ -78,12 +78,6 @@ function page() {
           ))}
         </tbody>
       </table>
-      <button
-        onClick={() => signOut({ redirect: '/' })}
-        className="bg-accent text-white py-[10px] px-[68px] rounded-[24px] shadow-lg mt-[40px] cursor-pointer"
-      >
-        Logout
-      </button>
     </div>
   )
 }

@@ -1,20 +1,21 @@
-import COSidebar from '@/components/canteenOwner/COSidebar'
 import { getServerSession } from 'next-auth'
 import React from 'react'
-import { OPTIONS } from '../api/auth/[...nextauth]/route'
 import { redirect } from 'next/dist/server/api-utils'
+import { OPTIONS } from '../api/auth/[...nextauth]/route'
+import AdminSidebar from '@/components/admin/AdminSidebar'
 
 const layout = async ({ children }) => {
   const session = await getServerSession(OPTIONS)
   if (!session) redirect('/')
 
-  if (session.user.role_id !== 2) {
+  if (session.user.role_id !== 3) {
     redirect('/unauthorized')
   }
+
   return (
     <div className="flex">
       <div>
-        <COSidebar />
+        <AdminSidebar />
       </div>
       <div className="pl-[280px]  w-full">{children}</div>
     </div>

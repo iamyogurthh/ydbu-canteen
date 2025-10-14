@@ -17,6 +17,14 @@ export async function middleware(req) {
     return NextResponse.redirect(new URL('/unauthorized', req.url))
   }
 
+  if (!token && pathname.startsWith('/admin')) {
+    return NextResponse.redirect(new URL('/'), req.url)
+  }
+
+  if (pathname.startsWith('/admin') && token.role_id !== 3) {
+    return NextResponse.redirect(new URL('/unauthorized'), req.url)
+  }
+
   return NextResponse.next()
 }
 

@@ -52,3 +52,14 @@ export async function updateCanteen(id,name,profile_img,cover_img){
     }
     return false;
 }
+
+export async function deleteCanteen(id) {
+    const [result] = await pool.query(
+        `
+            DELETE FROM Canteen WHERE id = ?
+        `,
+        [id]
+    );
+
+    return result.affectedRows > 0;
+}

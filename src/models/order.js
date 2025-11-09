@@ -3,15 +3,15 @@ import { getCanteenById, getCanteenByName } from "./canteen";
 import { getUserById } from "./user";
 import { getMenuById } from "./menu";
 
-export async function getOrderId(user_id,name,phone,major,current_location) {
+export async function getOrderId(user_id,name,phone,current_location) {
     const user = await getUserById(user_id);
     if(!user){
         return;
     }
     const [order] = await pool.query(
         `
-        INSERT INTO Orders (current_location,user_id,name,phone,major) VALUES (?,?,?,?,?)
-        `, [current_location,user_id,name,phone,major]
+        INSERT INTO Orders (current_location,user_id,name,phone) VALUES (?,?,?,?)
+        `, [current_location,user_id,name,phone]
     );
     return order.insertId;
     

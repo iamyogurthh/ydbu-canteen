@@ -108,8 +108,6 @@ FormData =
     ph_no,
     name,
     nrc,
-    roll_no,
-    major,
     current_address,
     password
 Response = {
@@ -118,6 +116,52 @@ Response = {
 
 ------------------------------------------------------------------------
 
+
+Purpose = "To Place an Order"
+URL = /api/orders
+Method = POST
+** The last item in the array should be the user Information **
+Body(Json Data) = [
+  {
+    id: 1,
+    quantity: 1,
+    food: {
+      id: 1,
+      canteen_id: 1,
+      name: 'Breakfast Combo Set 1',
+      quantity: 5,
+      img: '/menu_img/food1.jpeg',
+      status: 'available',
+      price: 3200
+    },
+    canteen_name: 'Delecious Kitchen'
+  },
+  {
+    id: 7,
+    quantity: 1,
+    food: {
+      id: 7,
+      canteen_id: 1,
+      name: 'Chicken Rice',
+      quantity: 5,
+      img: '/sample_img/menu.jpg',
+      status: 'available',
+      price: 45
+    },
+    canteen_name: 'Delecious Kitchen'
+  },
+  {
+    user_id: 5,
+    name: 'fhg',
+    phone: 'hjhk',
+    current_location: 'gkjghk'
+  }
+]
+
+
+
+------------------------------------------------------------------------
+                            Admin
 -------------------------------------------------------------------------
 
 Purpose = "To Get A List Of User Order Which Are Belong To The Canteen"
@@ -243,7 +287,6 @@ Purpose = To Update A User
 URL = /api/users/self/[user_id]
 Method = PUT 
 Body(form) = {
-    img,
     ph_no,
     name,
     nrc,

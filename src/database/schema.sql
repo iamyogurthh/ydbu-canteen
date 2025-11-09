@@ -16,7 +16,6 @@ CREATE TABLE Canteen(
 
 CREATE TABLE User (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    img VARCHAR(255) DEFAULT '/sample_img/user.jpg',
     role_id INT NOT NULL DEFAULT 1,
     canteen_id INT DEFAULT NULL,
     ph_no VARCHAR(255) NOT NULL UNIQUE,
@@ -36,6 +35,7 @@ CREATE TABLE Menu(
     name VARCHAR(255) NOT NULL,
     quantity INT,
     img VARCHAR(255) NOT NULL DEFAULT '/sample_img/menu.jpg',
+    status ENUM('available','notavailable') DEFAULT 'available',
     price INT NOT NULL,
     FOREIGN KEY (canteen_id) REFERENCES canteen(id) ON DELETE CASCADE
 );
@@ -98,7 +98,6 @@ CREATE TABLE Orders (
     user_id INT,
     name VARCHAR(100),
     phone VARCHAR(15),
-    major VARCHAR(100),
     current_location VARCHAR(255),
     status ENUM('pending','delivered') DEFAULT 'pending',     
     order_date DATETIME DEFAULT NOW(),
@@ -120,8 +119,8 @@ CREATE TABLE OrderItems (
     FOREIGN KEY (menu_id) REFERENCES Menu(id) ON DELETE CASCADE
 );
 
-INSERT INTO Orders (current_location,user_id,name,phone,major)
-VALUES ("CTCIII",1,"mg mg","092343143","CS");
+INSERT INTO Orders (current_location,user_id,name,phone)
+VALUES ("CTCIII",1,"mg mg","092343143");
 
 INSERT INTO OrderItems (order_id,user_id, canteen_id, menu_id, quantity, price, total_price)
 VALUES (1,1,1, 1, 2,3200,6400);

@@ -4,12 +4,13 @@ import { getOrderId, insertOrderItems } from "@/models/order";
 export async function POST(req) {
     const data = await req.json();
     console.log(data);
+    return Response.json({message : "success"})
     if (!data) {
         return Response.json({ message: "Some fields are missing" }, { status: 400 })
     }
     console.log(data[data.length - 1])
     const { user_id, name, phone, major, current_location } = data[data.length - 1];
-    const order_id = await getOrderId(user_id, name, phone, major, current_location);
+    const order_id = await getOrderId(user_id, name, phone, current_location);
     console.log(order_id);
 
     //Check for Availability

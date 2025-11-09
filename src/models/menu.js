@@ -4,7 +4,7 @@ export async function getMenuByCanteenId(id){
     const [canteen] = await pool.query(`
     SELECT * FROM Canteen WHERE id=?`,[id]);
     const [menus] = await pool.query(`
-    SELECT * FROM Menu WHERE canteen_id=?`,[id])
+    SELECT * FROM Menu WHERE canteen_id=? AND status='available'`,[id])
     return {canteen : canteen[0],menus}
 }
 
@@ -61,4 +61,15 @@ export async function checkMenuAvailability(menu_id,quantity){
         return false;
     }
     return true;
+}
+
+export async function deleteMenu(id) {
+    const [result] = await pool.query(
+        `
+            DELETE FROM Menu WHERE id = ?
+        `,
+        [id]
+    );
+
+    return result.affectedRows > 0;
 }

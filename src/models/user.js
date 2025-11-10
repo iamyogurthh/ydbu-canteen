@@ -33,14 +33,12 @@ export async function createUser({
 
 export async function updateUser(id,ph_no,
     name,
-    img,
     nrc,
     current_address,
     password){
         const isok = await pool.query(
             `
             UPDATE User SET
-            img = ?,
             ph_no = ?,
             name = ?,
             nrc = ?,
@@ -48,7 +46,7 @@ export async function updateUser(id,ph_no,
             password = ?
             WHERE id = ?;
 
-            `,[img,ph_no,name,nrc,current_address,password,id]
+            `,[ph_no,name,nrc,current_address,password,id]
         )
         if(isok){
             return true;

@@ -11,15 +11,13 @@ const page = () => {
   const { data: session, status } = useSession()
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
-  const [major, setMajor] = useState('')
   const [currentLocation, setCurrentLocation] = useState('')
-  const [note, setNote] = useState('')
   const router = useRouter()
   if (status == 'loading') {
     return <FullScreenLoader />
   }
 
-  console.log(cartItems)
+  console.log("Cart items is " ,cartItems)
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -27,12 +25,10 @@ const page = () => {
       user_id: session.user.id,
       name,
       phone,
-      major,
       current_location: currentLocation,
-      special_request: note,
     })
     console.log('This is from submit', cartItems)
-    console.log(name, phone, major, currentLocation, note)
+    console.log(name, phone, currentLocation)
 
     const res = await fetch('http://localhost:3000/api/orders', {
       method: 'POST',
@@ -64,15 +60,6 @@ const page = () => {
       },
     },
     {
-      label: 'Major',
-      placeholder: 'Enter your Major*',
-      type: 'text',
-      id: 'major',
-      handleChange(e) {
-        setMajor(e.target.value)
-      },
-    },
-    {
       label: 'Current Location',
       placeholder: 'Enter your Current location correctly*',
       type: 'textarea',
@@ -80,16 +67,6 @@ const page = () => {
       custom_h: 'h-[120px]',
       handleChange(e) {
         setCurrentLocation(e.target.value)
-      },
-    },
-    {
-      label: 'Note',
-      placeholder: 'Enter your note (optional)',
-      type: 'textarea',
-      id: 'note',
-      custom_h: 'h-[120px]',
-      handleChange(e) {
-        setNote(e.target.value)
       },
     },
   ]

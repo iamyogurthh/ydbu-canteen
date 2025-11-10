@@ -8,21 +8,17 @@ export async function POST(req) {
       ph_no,
       name,
       nrc,
-      roll_no,
-      major,
       current_address,
       password, } = getDataFromForm(formData,
         'ph_no',
         'name',
         'nrc',
-        'roll_no',
-        'major',
         'current_address',
         'password',);
-    if(!ph_no || ! name || ! nrc || ! roll_no || ! major || ! current_address || ! password){
+    if(!ph_no || ! name || ! nrc || ! current_address || ! password){
         return Response.json({messsage : "There are missing field"},{status : 400})
     }
-    const userId = await createUser({ph_no,name,nrc,roll_no,major,current_address,password});
+    const userId = await createUser({ph_no,name,nrc,current_address,password});
 
     return Response.json({ message: 'User created successfully'}, { status: 201 });
   } catch (err) {

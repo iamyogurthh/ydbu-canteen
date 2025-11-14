@@ -3,9 +3,19 @@ import React from 'react'
 
 const layout = ({ children }) => {
   return (
-    <div className="flex pt-[70px] ">
+    <div className="flex pt-[70px]">
+      {/* Sidebar only visible on md+ */}
       <ProfileSidebar />
-      <div className="pl-[280px]  w-full">{children}</div>
+
+      <div
+        className="
+          w-full 
+          md:pl-[240px]   /* space for sidebar on desktop */
+          px-4            /* padding for mobile */
+        "
+      >
+        {children}
+      </div>
     </div>
   )
 }

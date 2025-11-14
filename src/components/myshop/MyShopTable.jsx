@@ -12,6 +12,7 @@ const MyShopTable = ({ menuItems }) => {
               <th className="px-4 py-2 text-left">Item Image</th>
               <th className="px-4 py-2 text-left">Item Name</th>
               <th className="px-4 py-2 text-left">Price</th>
+              <th className="px-4 py-2 text-left">Status</th>
               <th className="px-4 py-2 text-left">Action</th>
             </tr>
           </thead>
@@ -27,6 +28,7 @@ const MyShopTable = ({ menuItems }) => {
                 </td>
                 <td className="px-4 py-2">{item.name}</td>
                 <td className="px-4 py-2">{item.price} MMK</td>
+                <td className="px-4 py-2">{item.status}</td>
                 <td className="px-4 py-2  space-x-2 action-cell">
                   <Link
                     href={`/canteenOwner/myshop/editmenu?id=${item.id}`}

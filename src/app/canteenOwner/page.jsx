@@ -51,14 +51,6 @@ function page() {
       value: user.nrc,
     },
     {
-      label: 'Major',
-      value: user.major,
-    },
-    {
-      label: 'Roll-Number',
-      value: user.roll_no,
-    },
-    {
       label: 'Address',
       value: user.current_address,
     },
@@ -67,7 +59,6 @@ function page() {
   return (
     <div className="pl-[40px] pt-[40px]">
       <h1 className="font-bold text-[24px] mb-[24px] ">My Profile</h1>
-      <img src={user.img} alt="user-img" className="w-[152px] mb-[40px]" />
       <table>
         <tbody>
           {tableRowElements.map((item, index) => (

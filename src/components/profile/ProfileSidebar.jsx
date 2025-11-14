@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import ProfileSidebarItem from './ProfileSidebarItem'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -16,12 +16,25 @@ const ProfileSidebar = () => {
     }
   }, [status, router])
 
-  if (status === 'loading') return <FullScreenLoader /> // or a loader
-
+  if (status === 'loading') return <FullScreenLoader />
   if (!session) return null
 
   return (
-    <div className="bg-white fixed top-0 bottom-0 w-[280px] shadow-md px-[16px] pt-[100px] flex flex-col items-center">
+    <div
+      className="
+        bg-white 
+        fixed 
+        top-[70px] 
+        bottom-0 
+        w-[240px] 
+        shadow-md 
+        px-[16px] 
+        pt-[40px] 
+        flex-col 
+        items-center
+        hidden md:flex     /* hide on mobile, show on md+ */
+      "
+    >
       <ProfileSidebarItem role_id={session.user.role_id} />
     </div>
   )

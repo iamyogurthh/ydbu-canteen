@@ -2,7 +2,7 @@ import React from 'react'
 import MyCartItemListTable from './MyCartItemListTable'
 const MyCartItemList = () => {
   return (
-    <div className="bg-white rounded-[8px] shadow-md py-[16px] w-[60%]">
+    <div className="bg-white rounded-[8px] shadow-md py-[16px] md:w-[60%]">
       <div className="flex items-center justify-center mb-[24px]">
         <img
           src="./system_icons/cart-red.png"

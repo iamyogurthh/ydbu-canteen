@@ -52,4 +52,11 @@ export async function updateUser(id,ph_no,
             return true;
         }
         return false;
-    }
+}
+
+export async function deleteUserById(id) {
+    const [result] = await pool.query(`
+    DELETE FROM User WHERE id=?
+    `, [id]);
+    return result.affectedRows > 0;
+}

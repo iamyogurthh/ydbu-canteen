@@ -11,12 +11,12 @@ const OrderDetailModal = ({ order, onClose, StatusBadge, canteen_id }) => {
   const tableRowElements = [
     { label: 'Name', value: order.name },
     { label: 'Phone', value: order.phone },
-    { label: 'Major', value: order.major },
+    // { label: 'Major', value: order.major },
     { label: 'Location', value: order.location },
   ]
 
   const totalPrice = orderItems.reduce((sum, item) => {
-    return sum + item.price * item.quantity
+    return sum + item.menu_price * item.menu_quantity
   }, 0)
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const OrderDetailModal = ({ order, onClose, StatusBadge, canteen_id }) => {
       try {
         setLoading(true)
         const res = await fetch(
-          `/api/admin/canteens/${canteen_id}/orders/users/${order.customer_id}`
+          `/api/admin/canteens/${canteen_id}/orders/users/${order.order_id}`
         )
         const data = await res.json()
         setOrderItems(data)
@@ -95,6 +95,7 @@ const OrderDetailModal = ({ order, onClose, StatusBadge, canteen_id }) => {
                   <th className="p-2 text-left">Item Name</th>
                   <th className="p-2 text-left">Quantity</th>
                   <th className="p-2 text-left">Price</th>
+                  {/* <th className="p-2 text-left">Status</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -105,15 +106,17 @@ const OrderDetailModal = ({ order, onClose, StatusBadge, canteen_id }) => {
                   >
                     <td className="p-2 flex items-center space-x-2">
                       <img
-                        src={item.img || '/fallback.png'}
-                        alt={item.name || 'Item'}
+                        // src={item.img || '/pfallback.png'}
+                        src={item.menu_img}
+                        alt={item.menu_name || 'Item'}
                         className="w-[75px] h-[56px] rounded-[8px] object-cover"
                         onError={(e) => (e.target.src = '/fallback.png')}
                       />
-                      <span>{item.name}</span>
+                      <span>{item.menu_name}</span>
                     </td>
-                    <td className="p-2">{item.quantity}</td>
-                    <td className="p-2">{item.price}</td>
+                    <td className="p-2">{item.menu_quantity}</td>
+                    <td className="p-2">{item.menu_total_price}</td>
+                    {/* <td className="p-2">{item.order_item_status}</td> */}
                   </tr>
                 ))}
               </tbody>

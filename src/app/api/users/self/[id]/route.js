@@ -1,4 +1,4 @@
-import { getUserById, updateUser } from "@/models/user";
+import { deleteUserById, getUserById, updateUser } from "@/models/user";
 import { getDataFromForm, handleImageEdit } from "@/utils/backendUtils";
 
 export async function GET(req,{params}){
@@ -44,4 +44,13 @@ export async function PUT(req, { params }) {
     }
     return Response.json({ message: "Can't update User" }, { status: 500 })
 
+}
+
+export async function DELETE(request, { params }) {
+    const { id } = await params;
+    const isok = await deleteUserById(id);
+    if (isok) {
+        return Response.json({message : "Successfully deleted"});
+    }
+    return Response.json({ message: "Can't Delete User " }, { status: 400 });
 }

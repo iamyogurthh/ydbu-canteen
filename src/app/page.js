@@ -1,13 +1,18 @@
 import CanteenCard from '@/components/CanteenCard'
 import { getServerSession } from 'next-auth'
-import { OPTIONS } from './api/auth/[...nextauth]/route'
 import { redirect } from 'next/navigation'
+import { OPTIONS } from './api/auth/[...nextauth]/route'
+
 
 export default async function Home() {
+
   const session = await getServerSession(OPTIONS)
-  if (session?.user?.role_id == 2 || session?.user?.role_id == 3) {
-    redirect('/unauthorized')
-  }
+
+  if (session?.user?.role_id === 2)
+    redirect('/canteenOwner')
+
+  if(session?.user?.role_id === 3)
+    redirect('/adminn')
 
   const data = await fetch('http://localhost:3000/api/canteens')
   const canteens = await data.json()

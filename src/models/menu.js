@@ -1,6 +1,14 @@
 import pool from "@/database/database";
 
-export async function getMenuByCanteenId(id){
+export async function getAllMenuByCanteenId(id){
+    const [canteen] = await pool.query(`
+    SELECT * FROM Canteen WHERE id=?`,[id]);
+    const [menus] = await pool.query(`
+    SELECT * FROM Menu WHERE canteen_id=?`,[id])
+    return {canteen : canteen[0],menus}
+}
+
+export async function getAvailableMenuByCanteenId(id){
     const [canteen] = await pool.query(`
     SELECT * FROM Canteen WHERE id=?`,[id]);
     const [menus] = await pool.query(`
@@ -19,11 +27,11 @@ export async function getMenuById(id){
 
 //--------------------Create Section------------------------
 
-export async function createMenu(canteen_id, name,quantity, img, price){
+export async function createMenu(canteen_id, name, img, price){
     const isok = await pool.query(
         `
-            INSERT INTO Menu (canteen_id,name,quantity,img,price) VALUES (?,?,?,?,?)
-        `,[canteen_id,name,quantity,img,price]
+            INSERT INTO Menu (canteen_id,name,img,price) VALUES (?,?,?,?)
+        `,[canteen_id,name,img,price]
     )
     if(isok){
         return true;
@@ -31,16 +39,15 @@ export async function createMenu(canteen_id, name,quantity, img, price){
     return false;
 }
 
-export async function updateMenu(id,name,quantity,img,price){
+export async function updateMenu(id,name,img,price){
     const isok = await pool.query(
     `   
         UPDATE Menu SET
         name = ?,
-        quantity = ?,
         img = ?,
         price = ?
         WHERE id = ?;
-    `,[name,quantity,img,price,id]
+    `,[name,img,price,id]
     );
     if(isok){
         return true;
@@ -48,22 +55,22 @@ export async function updateMenu(id,name,quantity,img,price){
     return false;
 }
 
-export async function checkMenuAvailability(menu_id,quantity){
-    const [menu] = await pool.query(
-        `
-        SELECT * FROM MENU WHERE id=?
-        `,[menu_id]
-    );
-    if(!menu){
-        return false;
+export async function updateMenuStatus(id,status){
+    const isok = await pool.query(
+    `   
+        UPDATE Menu SET
+        status=? WHERE id=?
+    `,[status,id]);
+    if(isok){
+        return true;
     }
-    if(menu[0].quantity < quantity){
-        return false;
-    }
-    return true;
+    return false;
 }
 
-export async function deleteMenu(id) {
+
+
+
+export async function deleteMenuById(id) {
     const [result] = await pool.query(
         `
             DELETE FROM Menu WHERE id = ?

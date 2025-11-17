@@ -27,9 +27,10 @@ const ShopDashboardTable = ({ orders, canteen_id }) => {
         <table className="w-full bg-white">
           <thead className="bg-red-600 text-white">
             <tr>
+              <th className='px-4 py-2 text-left'>Order Id</th>
               <th className="px-4 py-2 text-left">Name</th>
               <th className="px-4 py-2 text-left">Phone</th>
-              <th className="px-4 py-2 text-left">Major</th>
+              {/* <th className="px-4 py-2 text-left">Major</th> */}
               <th className="px-4 py-2 text-left">Location</th>
               <th className="px-4 py-2 text-left">Status</th>
               <th className="px-4 py-2 text-left">Action</th>
@@ -45,9 +46,10 @@ const ShopDashboardTable = ({ orders, canteen_id }) => {
                   setSelectedOrder(order)
                 }}
               >
+                <td className="px-4 py-2">{order.order_id}</td>
                 <td className="px-4 py-2">{order.name}</td>
                 <td className="px-4 py-2">{order.phone}</td>
-                <td className="px-4 py-2">{order.major}</td>
+                {/* <td className="px-4 py-2">{order.major}</td> */}
                 <td className="px-4 py-2">{order.location}</td>
                 <td className="px-4 py-2">
                   <StatusBadge status={order.status} />

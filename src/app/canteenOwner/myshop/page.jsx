@@ -6,9 +6,7 @@ import MyShopTable from '@/components/myshop/MyShopTable'
 
 const page = async () => {
   const session = await getServerSession(OPTIONS)
-  const data = await fetch(
-    `http://localhost:3000/api/canteens/${session.user.canteen_id}`
-  )
+  const data = await fetch(`http://localhost:3000/api/canteens/${session.user.canteen_id}?all=true`)
   const allData = await data.json()
   return (
     <div className="pb-[40px]">

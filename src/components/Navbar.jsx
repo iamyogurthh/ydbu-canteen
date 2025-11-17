@@ -33,7 +33,8 @@ const Navbar = () => {
               Login
             </Link>
           ) : (
-            session.user.role_id == 1 && <NavbarLoggedInUser />
+            // session.user.role_id == 1 && <NavbarLoggedInUser />
+            <NavbarLoggedInUser />
           )}
         </div>
 

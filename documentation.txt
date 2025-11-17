@@ -81,7 +81,7 @@ Response = {
             
 
 --------------------------------------------------
-
+                    Get User By Phone
 
 Purpose = To Get "A Specific" User
 URL = /api/users/[phone_no]
@@ -99,10 +99,11 @@ Response = {
     "password":"pass123"
 }
 
-----------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+                        Register User
 
 Purpose = "To Register A User"
-URL = /api/auth/Register
+URL = /api/auth/register
 Method = POST
 FormData = 
     ph_no,
@@ -174,7 +175,6 @@ Response = [
         "phone":"0922222223",
         "major":"Physics",
         "location":"CTC3",
-        "status":"pending"
     }
     ,
     ...
@@ -188,23 +188,24 @@ Response = [
 
 
 Purpose = "To Get A Specific Order That Is Belong To A User
-URL = /api/admin/canteens/[canteen_id]/orders/users/[user_id]
+URL = /api/admin/canteens/[canteen_id]/orders/users/[order_id]
 Method = GET
 Response = [
     {
-        "name":"Breakfast Combo Set 1",
-        "img":"/menu_img/food1.jpeg",
-        "quantity":1,
-        "price":"3200.00"
-    }
-    ,
+        "order_item_id":4,
+        "menu_name":"Veggie Burger",
+        "menu_img":"/sample_img/menu.jpg",
+        "menu_quantity":2,
+        "menu_price":"50.00",
+        "order_item_status":"pending",
+        "menu_total_price":"100.00"
+    },
     ...
 ]
 
 
-
 ----------------------------------------------------------------------------------------------
-
+                        Create a Canteen
 
 
 
@@ -223,6 +224,7 @@ Response = {
 
 
 ----------------------------------------------------------------------------------------------
+                        Create a Menu
 
 
 
@@ -244,6 +246,7 @@ Response = {
 
 
 ----------------------------------------------------------------------------------------------
+                        Update a Canteen
 
 
 
@@ -262,6 +265,7 @@ Response = {
 
 
 ----------------------------------------------------------------------------------------------
+                        Update a Menu
 
 
 
@@ -271,16 +275,49 @@ Method = PUT
 Body(form) = {
     name,
     img,
-    price
+    price,
 }
 Response = {
     message : "Menu Updated Successfully"
 }
 
 
+----------------------------------------------------------------------------------------------
+                        Update Menu Status 
+    ** Value must be 'available' or 'notavailable' exactly ! **
+
+
+Purpose = To Update Menu Status
+URL = /api/menus/[menu_id]/status
+Method = PUT
+Body(form) = {
+    stauts
+}
+Response = {
+    message : "Menu Status Updated Successfully"
+}
+
+
 
 ----------------------------------------------------------------------------------------------
+                        Update Order Status 
+    ** Value must be 'pending' or 'delivered' exactly ! **
 
+
+Purpose = To Update Order Status
+URL = /api/orders/[order_id]/canteens/[canteen_id]
+Method = PUT
+Body(form) = {
+    stauts
+}
+Response = {
+    message : "Menu Status Updated Successfully"
+}
+
+
+
+----------------------------------------------------------------------------------------------
+                            Update User
 
 
 Purpose = To Update A User
@@ -299,3 +336,52 @@ Response = {
     "User Updated Successfully"
 }
 
+----------------------------------------------------------------------------------------------
+                      Delete User
+
+
+Purpose = To Delete User
+URL = /api/users/self/[user_id]
+Method = DELETE 
+Response = {
+   message :  "Successfully deleted"
+}
+
+
+---------- ------------------------------------------------------------------------------------
+                      Delete Canteen
+
+
+Purpose = To Delete Canteen
+URL = /api/canteens/self/[canteen_id]
+Method = DELETE 
+Response = {
+   message :  "Successfully deleted"
+}
+
+
+----------------------------------------------------------------------------------------------
+                     Delete Menu
+
+
+Purpose = To Delete Menu
+URL = /api/menus/[menu_id]
+Method = DELETE 
+Response = {
+   message :  "Successfully deleted"
+}
+
+
+----------------------------------------------------------------------------------------------
+                     Delete Order
+
+
+Purpose = To Delete Order
+URL = /api/orders/[order_id]
+Method = DELETE 
+Response = {
+   message :  "Successfully deleted"
+}
+
+
+----------------------------------------------------------------------------------------------

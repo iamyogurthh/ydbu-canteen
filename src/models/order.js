@@ -47,3 +47,12 @@ export async function getOrderById(id){
     )
     return order[0];
 }
+
+export async function deleteOrderById(id){
+    const [result] = await pool.query(
+        `
+            DELETE FROM orders WHERE id=?
+        `,[id]
+    )
+    return result.affectedRows > 0;
+}

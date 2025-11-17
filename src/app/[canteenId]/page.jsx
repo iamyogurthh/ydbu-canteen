@@ -4,7 +4,7 @@ import React from 'react'
 
 const page = async ({ params }) => {
   const { canteenId } = await params
-  const data = await fetch(`http://localhost:3000/api/canteens/${canteenId}`)
+  const data = await fetch(`http://localhost:3000/api/canteens/${canteenId}?all=false`)
   const allData = await data.json()
   return (
     <div className="pt-[60px] pb-[40px]">

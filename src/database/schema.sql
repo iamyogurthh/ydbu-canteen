@@ -33,7 +33,6 @@ CREATE TABLE Menu(
     id INT AUTO_INCREMENT PRIMARY KEY,
     canteen_id INT,
     name VARCHAR(255) NOT NULL,
-    quantity INT,
     img VARCHAR(255) NOT NULL DEFAULT '/sample_img/menu.jpg',
     status ENUM('available','notavailable') DEFAULT 'available',
     price INT NOT NULL,
@@ -56,25 +55,25 @@ INSERT INTO Menu (canteen_id, name, quantity, img, price) VALUES
 (5, 'Mohinga', 5,'/menu_img/food5.jpg', 2500),
 (6, 'Mohinga with fried beans', 5,'/menu_img/food6.jpg', 1500);
 
-INSERT INTO Menu (canteen_id, name,quantity, price) VALUES
-(1, 'Chicken Rice',5, 45),
-(1, 'Veggie Burger', 5,50),
-(1, 'Spaghetti Bolognese',5, 60),
-(2, 'Beef Noodles', 5,55),
-(2, 'Tofu Salad',5, 40),
-(2, 'Fried Rice',5, 50),
-(3, 'Grilled Chicken',5, 65),
-(3, 'Paneer Wrap',5, 45),
-(3, 'Egg Sandwich',5, 35),
-(4, 'Fish Curry',5, 70),
-(4, 'Pasta Alfredo',5, 60),
-(4, 'Club Sandwich',5, 55),
-(5, 'Mutton Biryani', 5,75),
-(5, 'Chow Mein', 5,50),
-(5, 'Caesar Salad',5, 45),
-(6, 'Sushi Set', 5,80),
-(6, 'Katsu Don', 5,65),
-(6, 'Miso Ramen',5, 70);
+INSERT INTO Menu (canteen_id, name, price) VALUES
+(1, 'Chicken Rice', 45),
+(1, 'Veggie Burger',50),
+(1, 'Spaghetti Bolognese', 60),
+(2, 'Beef Noodles',55),
+(2, 'Tofu Salad',40),
+(2, 'Fried Rice',50),
+(3, 'Grilled Chicken', 65),
+(3, 'Paneer Wrap',45),
+(3, 'Egg Sandwich', 35),
+(4, 'Fish Curry', 70),
+(4, 'Pasta Alfredo',60),
+(4, 'Club Sandwich', 55),
+(5, 'Mutton Biryani',75),
+(5, 'Chow Mein',50),
+(5, 'Caesar Salad',45),
+(6, 'Sushi Set', 80),
+(6, 'Katsu Don', 65),
+(6, 'Miso Ramen',70);
 
 INSERT INTO Role (id,name) VALUES 
 (1,'student'),
@@ -99,7 +98,6 @@ CREATE TABLE Orders (
     name VARCHAR(100),
     phone VARCHAR(15),
     current_location VARCHAR(255),
-    status ENUM('pending','delivered') DEFAULT 'pending',     
     order_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );
@@ -112,7 +110,8 @@ CREATE TABLE OrderItems (
     menu_id INT,
     quantity INT,
     price DECIMAL(10,2),       
-    total_price DECIMAL(10,2), 
+    total_price DECIMAL(10,2),
+    status ENUM('pending','delivered') DEFAULT 'pending',      
     FOREIGN KEY (order_id) REFERENCES Orders(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
     FOREIGN KEY (canteen_id) REFERENCES Canteen(id) ON DELETE CASCADE,    

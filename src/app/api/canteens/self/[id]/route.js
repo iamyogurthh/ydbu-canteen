@@ -1,5 +1,5 @@
-import { getCanteenById, updateCanteen } from '@/models/canteen'
-import { getDataFromForm, handleImageEdit } from '@/utils/backendUtils'
+import { deleteCanteenById, getCanteenById, updateCanteen } from '@/models/canteen'
+import { deleteImage, getDataFromForm, handleImageEdit } from '@/utils/backendUtils'
 
 export async function PUT(req, { params }) {
   const { id } = await params
@@ -45,4 +45,32 @@ export async function GET(req, { params }) {
     return Response.json({ message: 'Canteen Not found' }, { status: 400 })
   }
   return Response.json(canteen)
+}
+
+export async function DELETE(request, { params }) {
+  const { id } = await params;
+  const canteen = await getCanteenById(id);
+
+  if(!canteen){
+    return Response.json({ message: "Canteen Not Found " }, { status: 400 });
+  }
+
+
+  //  (/sample_img/canteen.jpg)
+  const profileImageFolder = canteen.profile_img.split('/')[1];
+  const coverImageFolder = canteen.cover_img.split('/')[1];
+
+  if(profileImageFolder !== 'sample_img'){
+    await deleteImage(profileImageFolder,canteen.profile_img.split('/')[2]);
+  }
+
+  if(coverImageFolder !== 'sample_img'){
+    await deleteImage(coverImageFolder,canteen.cover_img.split('/')[2]);
+  }
+
+  const isok = await deleteCanteenById(id);
+  if (isok) {
+      return Response.json({message : "Successfully deleted"});
+  }
+  return Response.json({ message: "Can't Delete Canteen " }, { status: 400 });
 }

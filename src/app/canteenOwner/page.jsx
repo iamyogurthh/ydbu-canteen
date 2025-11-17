@@ -6,8 +6,9 @@ import FullScreenLoader from '@/components/FullScreenLoader'
 
 function page() {
   const [loading, setLoading] = useState(false)
-  const { data: session } = useSession()
+  const { data: session,status } = useSession()
   const [user, setUser] = useState(null)
+  console.log("User is ",user);
   useEffect(() => {
     if (!session) {
       return
@@ -27,10 +28,16 @@ function page() {
       }
     }
     getUser()
-  }, [])
-  if (!session) {
+  }, [status])
+
+   // WAIT until session loading is finished
+   if (status === "loading") {
+    return <FullScreenLoader />
+  }
+
+  //  redirect only after status is "unauthenticated"
+  if (status === "unauthenticated") {
     redirect('/')
-    return null
   }
 
   if (loading || !user) {
@@ -54,6 +61,10 @@ function page() {
       label: 'Address',
       value: user.current_address,
     },
+    {
+      label : 'Canteen',
+      value : session.user.canteen_name,
+    }
   ]
 
   return (

@@ -1,4 +1,4 @@
-import { getUserByPhone } from "@/models/user";
+import { deleteUserByPhone, getUserByPhone } from "@/models/user";
 import { handleImageEdit } from "@/utils/backendUtils";
 import { NextResponse } from "next/server";
 

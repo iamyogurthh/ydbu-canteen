@@ -3,7 +3,7 @@
 import FullScreenLoader from '@/components/FullScreenLoader'
 import { useShoppingCart } from '@/context/ShoppingCartContext'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 const page = () => {
@@ -13,8 +13,13 @@ const page = () => {
   const [phone, setPhone] = useState('')
   const [currentLocation, setCurrentLocation] = useState('')
   const router = useRouter()
-  if (status == 'loading') {
+
+  if(status === 'loading'){
     return <FullScreenLoader />
+  }else if(session.user.role_id == 2){
+    redirect('/canteenOwner');
+  }else if(session.user.role_id == 3){
+    redirect('/admin');
   }
 
   console.log("Cart items is " ,cartItems)

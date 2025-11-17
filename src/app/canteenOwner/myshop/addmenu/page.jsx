@@ -1,10 +1,12 @@
 'use client'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import FullScreenLoader from '@/components/FullScreenLoader'
 
 const page = () => {
+  const { data: session, status } = useSession();
+  const router = useRouter()
   const [image, setImage] = useState(null)
   const [data, setData] = useState({
     name: '',
@@ -12,8 +14,14 @@ const page = () => {
   })
   const [isLoading, setIsLoading] = useState(false)
 
-  const { data: session } = useSession()
-  const router = useRouter()
+  if (status === 'loading') {
+    return < FullScreenLoader />
+  } else if (!session || session.user.role_id == 1) {
+    redirect('/')
+  } else if (session.user.role_id == 3) {
+    redirect('/admin')
+  }
+
 
   const onChangeHandler = (event) => {
     const name = event.target.name

@@ -1,8 +1,12 @@
 'use client'
 
+import FullScreenLoader from '@/components/FullScreenLoader';
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 import React, { useState } from 'react'
 
 const page = () => {
+  const { data : session , status} = useSession();
   const [phone,setPhone] = useState('');
   const [name,setName] = useState('');
   const [nrc,setNrc] = useState('');
@@ -12,6 +16,15 @@ const page = () => {
   const [password,setPassword] = useState('');
   const [cpassword,setCpassword] = useState('');
   const [error , setError] = useState(null);
+
+  if(status === 'loading'){
+    return <FullScreenLoader />
+  }else if(session.user.role_id == 2){
+    redirect('/canteenOwner');
+  }else if(session.user.role_id == 3){
+    redirect('/admin');
+  }
+  
   async function handleSubmit(e){
     e.preventDefault();
     if(password !== cpassword){

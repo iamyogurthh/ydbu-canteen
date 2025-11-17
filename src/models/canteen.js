@@ -19,7 +19,7 @@ export async function getCanteenByName(canteen_name){
 }
 
 export async function getCanteens(){
-    const [canteens] = await pool.query('SELECT id,name,profile_img FROM Canteen');
+    const [canteens] = await pool.query('SELECT * FROM Canteen');
     return canteens;
 }
 

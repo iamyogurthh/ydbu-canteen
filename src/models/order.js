@@ -3,6 +3,11 @@ import { getCanteenById, getCanteenByName } from "./canteen";
 import { getUserById } from "./user";
 import { getMenuById } from "./menu";
 
+export async function getAllOrders(){
+    const [orders] = await pool.query(`SELECT * FROM orders`)
+    return orders;
+}
+
 export async function getOrderId(user_id,name,phone,current_location) {
     const user = await getUserById(user_id);
     if(!user){

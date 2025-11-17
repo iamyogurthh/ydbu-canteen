@@ -1,14 +1,23 @@
 'use client'
 import { useState } from 'react'
-import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { signIn, useSession } from 'next-auth/react'
+import { redirect, useRouter } from 'next/navigation'
+import FullScreenLoader from '@/components/FullScreenLoader'
 
 const Page = () => {
+  const { data: session, status } = useSession();
+  const router = useRouter()
   const [phNo, setPhNo] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
-  const router = useRouter()
 
+  if (status === 'loading') {
+    return <FullScreenLoader />
+  } else if (session.user.role_id == 2) {
+    redirect('/canteenOwner');
+  } else if (session.user.role_id == 3) {
+    redirect('/admin');
+  }
   const handleLogin = async (e) => {
     e.preventDefault()
 

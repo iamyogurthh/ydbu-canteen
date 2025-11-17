@@ -1,5 +1,10 @@
 import { checkMenuAvailability } from "@/models/menu";
-import { getOrderId, insertOrderItems } from "@/models/order";
+import { getAllOrders, getOrderId, insertOrderItems } from "@/models/order";
+
+export async function GET() {
+    const orders = await getAllOrders();
+    return Response.json(orders);
+}
 
 export async function POST(req) {
     const data = await req.json();

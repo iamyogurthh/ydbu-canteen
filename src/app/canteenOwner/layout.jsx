@@ -5,12 +5,6 @@ import { OPTIONS } from '../api/auth/[...nextauth]/route'
 import { redirect } from 'next/navigation'
 
 const layout = async ({ children }) => {
-  const session = await getServerSession(OPTIONS)
-  if (!session) redirect('/')
-
-  if (session.user.role_id !== 2) {
-    redirect('/')
-  }
   return (
     <div className="flex">
       <div>

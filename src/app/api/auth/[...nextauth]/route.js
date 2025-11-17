@@ -8,18 +8,18 @@ export const OPTIONS = {
     CredentialsProvider({
       name: 'Credentials',
       async authorize(credentials) {
-        console.log('i am authorizatig')
+        console.log('i am authorizing')
         console.log(credentials)
         const user = await getUserByPhone(credentials.ph_no)
         if (user && user.password === credentials.password) {
           const canteen = await getCanteenById(user.canteen_id);
-          console.log("canteen is ",canteen)
+          console.log("canteen is ", canteen)
           return {
             id: user.id,
             name: user.name,
             role_id: user.role_id,
             canteen_id: user.canteen_id,
-            canteen_name : canteen.name,
+            canteen_name: canteen?.name,
             ph_no: user.ph_no,
           }
         }
@@ -46,7 +46,7 @@ export const OPTIONS = {
           name: token.name,
           role_id: token.role_id,
           canteen_id: token.canteen_id,
-          canteen_name : token.canteen_name,
+          canteen_name: token.canteen_name,
           ph_no: token.ph_no,
         }
       }

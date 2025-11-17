@@ -3,9 +3,16 @@ import { getServerSession } from 'next-auth'
 import React from 'react'
 import Link from 'next/link'
 import MyShopTable from '@/components/myshop/MyShopTable'
+import { redirect } from 'next/navigation'
 
 const page = async () => {
   const session = await getServerSession(OPTIONS)
+
+  if (!session || session.user.role_id == 1) {
+    redirect('/')
+  } else if (session.user.role_id == 3) {
+    redirect('/admin')
+  }
   const data = await fetch(`http://localhost:3000/api/canteens/${session.user.canteen_id}?all=true`)
   const allData = await data.json()
   return (

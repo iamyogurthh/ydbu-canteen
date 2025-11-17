@@ -2,26 +2,9 @@
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import FullScreenLoader from '@/components/FullScreenLoader'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 
 const Page = () => {
-  const router = useRouter()
-  const { data: session } = useSession()
-  const id = session?.user?.canteen_id
-
-  const [data, setData] = useState({
-    name: '',
-    profile_img: '',
-    cover_img: '',
-  })
-
-  const [previewUrls, setPreviewUrls] = useState({
-    profile_img: '',
-    cover_img: '',
-  })
-
-  const [isLoading, setIsLoading] = useState(false)
-
   useEffect(() => {
     if (!session) return
     const getPrevProfileData = async () => {
@@ -58,6 +41,31 @@ const Page = () => {
       }
     }
   }, [previewUrls])
+  const router = useRouter()
+  const { data: session , status } = useSession()
+  const id = session?.user?.canteen_id
+
+  const [data, setData] = useState({
+    name: '',
+    profile_img: '',
+    cover_img: '',
+  })
+
+  const [previewUrls, setPreviewUrls] = useState({
+    profile_img: '',
+    cover_img: '',
+  })
+
+  const [isLoading, setIsLoading] = useState(false)
+
+  if(status === 'loading' ){
+    return <FullScreenLoader/>
+  }else if(!session || session.user.role_id == 1){
+    redirect('/');
+  }else if(session.user.role_id == 3){
+    redirect('/admin');
+  }
+
 
   const handleSubmit = async (event) => {
     event.preventDefault()

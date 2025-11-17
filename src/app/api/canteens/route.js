@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     const canteens = await getCanteens();
-    return NextResponse.json(canteens);
+    return Response.json(canteens);
 }
 
 export async function POST(req) {

@@ -6,82 +6,79 @@ import FullScreenLoader from '@/components/FullScreenLoader'
 
 function page() {
   const [loading, setLoading] = useState(false)
-  const { data: session,status } = useSession()
+  const { data: session, status } = useSession()
   const [user, setUser] = useState(null)
-  console.log("User is ",user);
   useEffect(() => {
-    if (!session) {
-      return
+  async function getUser() {
+    try {
+      setLoading(true)
+      const res = await fetch(
+        `http://localhost:3000/api/users/${session.user.ph_no}`
+      )
+      const data = await res.json()
+      setUser(data)
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
     }
-    async function getUser() {
-      try {
-        setLoading(true)
-        const res = await fetch(
-          `http://localhost:3000/api/users/${session.user.ph_no}`
-        )
-        const data = await res.json()
-        setUser(data)
-        setLoading(false)
-      } catch (error) {
-        console.log(error)
-        setLoading(false)
-      }
-    }
-    getUser()
-  }, [status])
-
-   // WAIT until session loading is finished
-   if (status === "loading") {
-    return <FullScreenLoader />
   }
+  getUser()
+},[status]);
 
-  //  redirect only after status is "unauthenticated"
-  if (status === "unauthenticated") {
+// WAIT until session loading is finished
+if (status === "loading") {
+  return <FullScreenLoader />
+}else{
+  if(!session){
     redirect('/')
+  }else if(session.user.role_id == 3){
+    redirect('/admin');
   }
+}
 
-  if (loading || !user) {
-    return <FullScreenLoader />
+if (loading || !user) {
+  return <FullScreenLoader />
+}
+
+const tableRowElements = [
+  {
+    label: 'Name',
+    value: session.user.name,
+  },
+  {
+    label: 'Phone',
+    value: session.user.ph_no,
+  },
+  {
+    label: 'NRC',
+    value: user.nrc,
+  },
+  {
+    label: 'Address',
+    value: user.current_address,
+  },
+  {
+    label: 'Canteen',
+    value: session.user.canteen_name,
   }
+]
 
-  const tableRowElements = [
-    {
-      label: 'Name',
-      value: session.user.name,
-    },
-    {
-      label: 'Phone',
-      value: session.user.ph_no,
-    },
-    {
-      label: 'NRC',
-      value: user.nrc,
-    },
-    {
-      label: 'Address',
-      value: user.current_address,
-    },
-    {
-      label : 'Canteen',
-      value : session.user.canteen_name,
-    }
-  ]
-
-  return (
-    <div className="pl-[40px] pt-[40px]">
-      <h1 className="font-bold text-[24px] mb-[24px] ">My Profile</h1>
-      <table>
-        <tbody>
-          {tableRowElements.map((item, index) => (
-            <tr key={index}>
-              <td className="py-2 pr-[32px] font-bold">{item.label}</td>
-              <td className="py-2">{item.value}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )
+return (
+  <div className="pl-[40px] pt-[40px]">
+    <h1 className="font-bold text-[24px] mb-[24px] ">My Profile</h1>
+    <table>
+      <tbody>
+        {tableRowElements.map((item, index) => (
+          <tr key={index}>
+            <td className="py-2 pr-[32px] font-bold">{item.label}</td>
+            <td className="py-2">{item.value}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)
 }
 
 export default page

@@ -1,5 +1,10 @@
 import pool from "@/database/database";
 
+export async function getAllUsers(){
+    const [users] = await pool.query(`SELECT * FROM user`)
+    return users;
+}
+
 export async function getUserByPhone(phone) {
     const [user] = await pool.query(`
     SELECT * FROM User WHERE ph_no=?

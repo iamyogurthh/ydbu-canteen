@@ -5,12 +5,11 @@ import { signOut, useSession } from 'next-auth/react'
 import FullScreenLoader from '@/components/FullScreenLoader'
 
 function page() {
-  const [loading, setLoading] = useState(false)
-  const { data: session } = useSession()
-  const [user, setUser] = useState(null)
 
+  const [loading, setLoading] = useState(false)
+  const { data: session ,status } = useSession()
+  const [user, setUser] = useState(null)
   useEffect(() => {
-    if (!session) return
 
     async function getUser() {
       try {
@@ -28,14 +27,20 @@ function page() {
     }
 
     getUser()
-  }, [])
+  }, [status])
+  
+  if (loading || !user) return <FullScreenLoader />
 
-  if (!session) {
-    redirect('/')
-    return null
+  if(status === 'loading'){
+    return <FullScreenLoader />
+  }else if(session.user.role_id == 2){
+    redirect('/canteenOwner');
+  }else if(session.user.role_id == 3){
+    redirect('/admin');
   }
 
-  if (loading || !user) return <FullScreenLoader />
+
+  
 
   const tableRowElements = [
     { label: 'Name', value: session.user.name },

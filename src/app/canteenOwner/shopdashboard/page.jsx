@@ -4,9 +4,16 @@ import SearchBox from '@/components/profile/SearchBox'
 import ShopDashboardTable from '../../../components/profile/shopDashboard/ShopDashboardTable'
 import { OPTIONS } from '@/app/api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
 
 const ShopDashboardPage = async () => {
   const session = await getServerSession(OPTIONS)
+
+  if(!session || session.user.role_id == 1){
+    redirect('/')
+  }else if(session.user.role_id == 3){
+    redirect('/admin')
+  }
 
   const orders = await fetch(
     `http://localhost:3000/api/admin/canteens/${session.user.canteen_id}/orders/users`

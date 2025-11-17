@@ -1,16 +1,16 @@
 import { getServerSession } from 'next-auth'
 import React from 'react'
-import { redirect } from 'next/dist/server/api-utils'
+import { redirect } from 'next/navigation'
 import { OPTIONS } from '../api/auth/[...nextauth]/route'
 import AdminSidebar from '@/components/admin/AdminSidebar'
 
 const layout = async ({ children }) => {
-  const session = await getServerSession(OPTIONS)
-  if (!session) redirect('/')
+  // const session = await getServerSession(OPTIONS)
+  // if (!session){redirect('/')}
 
-  if (session.user.role_id !== 3) {
-    redirect('/unauthorized')
-  }
+  // if (session.user.role_id == 2) {
+  //   redirect('/canteenOwner')
+  // }
 
   return (
     <div className="flex">

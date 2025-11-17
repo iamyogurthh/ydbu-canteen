@@ -78,10 +78,10 @@ INSERT INTO Menu (canteen_id, name, price) VALUES
 INSERT INTO Role (id,name) VALUES 
 (1,'student'),
 (2,'canteen_owner'),
-(3,'master');
+(3,'admin');
 
 INSERT INTO User (role_id,canteen_id, ph_no, name, nrc, current_address, password) VALUES
-(1, NULL, '0911111111', 'Headmaster U Aung', '12/MaKaNa(N)123456', 'Yangon', 'pass123'),
+(3, NULL, '0911111111', 'Headmaster U Aung', '12/MaKaNa(N)123456', 'Yangon', 'pass123'),
 (1, NULL, '0933333331', 'Student Kyaw', '12/MaKaNa(N)123463', 'Yangon', 'pass123'),
 (1, NULL, '0933333332', 'Su', '12/MaKaNa(N)123464', 'Mandalay', 'pass123'),
 (1, NULL, '0933333333', 'Htet', '12/MaKaNa(N)123465', 'Magway', 'pass123'),

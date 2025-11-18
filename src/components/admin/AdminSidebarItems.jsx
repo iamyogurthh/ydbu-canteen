@@ -5,13 +5,13 @@ import { usePathname } from 'next/navigation'
 import React from 'react'
 
 const SIDEBAR_ITEMS = [
-  {
-    key: 'admin_statistics',
-    path: '',
-    label: 'Statistics',
-    img: '/system_icons/chart.png',
-    activeImg: '/system_icons/chart-active.png',
-  },
+  // {
+  //   key: 'admin_statistics',
+  //   path: '',
+  //   label: 'Statistics',
+  //   img: '/system_icons/chart.png',
+  //   activeImg: '/system_icons/chart-active.png',
+  // },
   {
     key: 'admin_canteen',
     path: '/canteens',
@@ -25,6 +25,13 @@ const SIDEBAR_ITEMS = [
     label: 'Users',
     img: '/system_icons/users.png',
     activeImg: '/system_icons/users-active.png',
+  },
+  {
+    key: 'admin_create',
+    path: '/createCanteen',
+    label: 'Create Canteen',
+    img: '/system_icons/plus.svg',
+    activeImg: '/system_icons/plus-active.svg',
   },
 ]
 

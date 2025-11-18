@@ -3,13 +3,12 @@ import { getServerSession } from 'next-auth'
 import { OPTIONS } from './api/auth/[...nextauth]/route'
 import { redirect } from 'next/navigation'
 
-
 export default async function Home() {
   const session = await getServerSession(OPTIONS)
 
   if (session?.user?.role_id == 2) {
     redirect('/canteenOwner')
-  } else if (session.user.role_id == 3) {
+  } else if (session?.user?.role_id == 3) {
     redirect('/admin')
   }
 

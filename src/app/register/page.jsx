@@ -1,50 +1,57 @@
 'use client'
 
-import FullScreenLoader from '@/components/FullScreenLoader';
-import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
+import FullScreenLoader from '@/components/FullScreenLoader'
+import { useSession } from 'next-auth/react'
+import { redirect, useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 const page = () => {
-  const { data : session , status} = useSession();
-  const [phone,setPhone] = useState('');
-  const [name,setName] = useState('');
-  const [nrc,setNrc] = useState('');
-  const [roll,setRoll] = useState('');
-  const [major,setMajor] = useState('');
-  const [address,setAddress] = useState('');
-  const [password,setPassword] = useState('');
-  const [cpassword,setCpassword] = useState('');
-  const [error , setError] = useState(null);
+  const { data: session, status } = useSession()
+  const [phone, setPhone] = useState('')
+  const [name, setName] = useState('')
+  const [nrc, setNrc] = useState('')
+  const [address, setAddress] = useState('')
+  const [password, setPassword] = useState('')
+  const [cpassword, setCpassword] = useState('')
+  const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
-  if(status === 'loading'){
+  if (status === 'loading') {
     return <FullScreenLoader />
-  }else if(session.user.role_id == 2){
-    redirect('/canteenOwner');
-  }else if(session.user.role_id == 3){
-    redirect('/admin');
+  } else if (session?.user?.role_id == 2) {
+    redirect('/canteenOwner')
+  } else if (session?.user?.role_id == 3) {
+    redirect('/admin')
   }
-  
-  async function handleSubmit(e){
-    e.preventDefault();
-    if(password !== cpassword){
-      setError("Password and Confirm Password doesn't match");
-      return;
-    }
-    const formData = new FormData();
-    formData.append("ph_no",phone);
-    formData.append('name',name);
-    formData.append('nrc',nrc);
-    formData.append('roll_no',roll);
-    formData.append('major',major);
-    formData.append('current_address',address);
-    formData.append('password',password);
-    const res = await fetch('http://localhost:3000/api/auth/register',{
-      method : 'POST',
-      body : formData
-    })
-    if(res?.ok){
-      console.log("Success register")
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setIsLoading(true)
+    try {
+      if (password !== cpassword) {
+        setError("Password and Confirm Password doesn't match")
+        setIsLoading(false)
+        return
+      }
+      const formData = new FormData()
+      formData.append('ph_no', phone)
+      formData.append('name', name)
+      formData.append('nrc', nrc)
+      formData.append('current_address', address)
+      formData.append('password', password)
+      const res = await fetch('http://localhost:3000/api/auth/register', {
+        method: 'POST',
+        body: formData,
+      })
+      if (res?.ok) {
+        console.log('Success register')
+        router.push('/login')
+      }
+    } catch (e) {
+      console.log(e)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -54,74 +61,60 @@ const page = () => {
       placeholder: 'Enter your Phone number*',
       type: 'phone',
       id: 'ph_no',
-      handleChange(e){
-        setPhone(e.target.value);
-      }
+      handleChange(e) {
+        setPhone(e.target.value)
+      },
     },
     {
       label: 'Name',
       placeholder: 'Enter your Name*',
       type: 'text',
       id: 'name',
-      handleChange(e){
-        setName(e.target.value);
-      }
+      handleChange(e) {
+        setName(e.target.value)
+      },
     },
     {
       label: 'NRC',
       placeholder: 'Enter your nrc number*',
       type: 'text',
       id: 'nrc',
-      handleChange(e){
-        setNrc(e.target.value);
-      }
-    },
-    {
-      label: 'Roll-Number',
-      placeholder: 'Enter your roll number*',
-      type: 'text',
-      id: 'roll_no',
-      handleChange(e){
-        setRoll(e.target.value);
-      }
-    },
-    {
-      label: 'Major',
-      placeholder: 'Enter your Major*',
-      type: 'text',
-      id: 'major',
-      handleChange(e){
-        setMajor(e.target.value);
-      }
+      handleChange(e) {
+        setNrc(e.target.value)
+      },
     },
     {
       label: 'Current Address',
       placeholder: 'Enter your current address*',
       type: 'text',
       id: 'address',
-      handleChange(e){
-        setAddress(e.target.value);
-      }
+      handleChange(e) {
+        setAddress(e.target.value)
+      },
     },
     {
       label: 'Password',
       placeholder: 'Enter your password*',
       type: 'password',
       id: 'password',
-      handleChange(e){
-        setPassword(e.target.value);
-      }
+      handleChange(e) {
+        setPassword(e.target.value)
+      },
     },
     {
       label: 'Confirm Password',
       placeholder: 'Confirm your password*',
       type: 'password',
       id: 'confirmPwd',
-      handleChange(e){
-        setCpassword(e.target.value);
-      }
+      handleChange(e) {
+        setCpassword(e.target.value)
+      },
     },
   ]
+
+  if (isLoading) {
+    return <FullScreenLoader />
+  }
 
   return (
     <div className="flex items-center justify-center mt-[117px]">

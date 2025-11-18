@@ -1,84 +1,21 @@
-'use client'
+import React from 'react'
 
-import React, { useState } from 'react'
-import Link from 'next/link'
-import OrderDetailModal from '@/components/profile/shopDashboard/OrderDetailModal'
-import Image from 'next/image'
-
-const StatusBadge = ({ status }) => {
-  const style = {
-    delivered: 'bg-green-600 text-white',
-    pending: 'bg-yellow-600 text-black',
-  }
-  return (
-    <span
-      className={`px-4 py-1 rounded text-sm font-semibold shadow-lg ${style[status]}`}
-    >
-      {status}
-    </span>
-  )
-}
-
-const ShopDashboardTable = ({ orders, canteen_id }) => {
-  const [selectedOrder, setSelectedOrder] = useState(null)
-  const [loadingId, setLoadingId] = useState(null)
-  const [ordersData, setOrdersData] = useState(orders)
-
-  // Update order status
-  const handleStatusChange = async (order_id, currentStatus) => {
-    if (loadingId) return // prevent spam
-    setLoadingId(order_id)
-
-    const newStatus = currentStatus === 'pending' ? 'delivered' : 'pending'
-    const formData = new FormData()
-    formData.append('status', newStatus) // yes, typo 'stauts' as per your API
-
-    try {
-      const res = await fetch(
-        `/api/orders/${order_id}/canteens/${canteen_id}`,
-        {
-          method: 'PUT',
-          body: formData,
-        }
-      )
-      if (res.ok) {
-        // Update local state immediately
-        setOrdersData((prev) =>
-          prev.map((order) =>
-            order.order_id === order_id
-              ? { ...order, status: newStatus }
-              : order
-          )
-        )
-        alert('Order Status Updated Successfully')
-      } else {
-        const data = await res.json()
-        alert(data.error || 'Something went wrong')
-      }
-    } catch (err) {
-      console.error(err)
-      alert('Network error')
-    } finally {
-      setLoadingId(null)
-    }
-  }
-
+const AdminCanteensTable = () => {
   return (
     <>
       <div className="overflow-x-auto border border-gray-300 rounded-[16px]">
         <table className="w-full bg-white">
           <thead className="bg-red-600 text-white">
             <tr>
-              <th className="px-4 py-2 text-left">Order Id</th>
+              <th className="px-4 py-2 text-left">Canteen Id</th>
               <th className="px-4 py-2 text-left">Name</th>
-              <th className="px-4 py-2 text-left">Phone</th>
-              <th className="px-4 py-2 text-left">Location</th>
-              <th className="px-4 py-2 text-left">Status</th>
+              <th className="px-4 py-2 text-left">Owner Name</th>
+              <th className="px-4 py-2 text-left">Created At</th>
               <th className="px-4 py-2 text-left">Action</th>
             </tr>
           </thead>
           <tbody>
-            {ordersData.map((order) => (
+            {/* {ordersData.map((order) => (
               <tr
                 key={order.order_id}
                 className="hover:bg-gray-100 cursor-pointer odd:bg-[#d7222217]"
@@ -120,21 +57,21 @@ const ShopDashboardTable = ({ orders, canteen_id }) => {
                   </button>
                 </td>
               </tr>
-            ))}
+            ))} */}
           </tbody>
         </table>
       </div>
 
-      {selectedOrder && (
+      {/* {selectedOrder && (
         <OrderDetailModal
           order={selectedOrder}
           onClose={() => setSelectedOrder(null)}
           StatusBadge={StatusBadge}
           canteen_id={canteen_id}
         />
-      )}
+      )} */}
     </>
   )
 }
 
-export default ShopDashboardTable
+export default AdminCanteensTable

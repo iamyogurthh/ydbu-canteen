@@ -7,7 +7,7 @@ const SearchBox = () => {
         <input
           type="text"
           placeholder="Search by name"
-          className="w-[258px]  py-[8px] pl-[16px] border border-black rounded-l-[8px]"
+          className="w-[258px]  py-[8px] pl-[16px] border border-black rounded-l-[8px] focus:outline-none"
         />
         <div>
           <button

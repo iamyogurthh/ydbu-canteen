@@ -8,12 +8,14 @@ import { redirect } from 'next/navigation'
 const page = async () => {
   const session = await getServerSession(OPTIONS)
 
-  if (!session || session.user.role_id == 1) {
+  if (!session || session?.user?.role_id == 1) {
     redirect('/')
-  } else if (session.user.role_id == 3) {
+  } else if (session?.user?.role_id == 3) {
     redirect('/admin')
   }
-  const data = await fetch(`http://localhost:3000/api/canteens/${session.user.canteen_id}?all=true`)
+  const data = await fetch(
+    `http://localhost:3000/api/canteens/${session.user.canteen_id}?all=true`
+  )
   const allData = await data.json()
   return (
     <div className="pb-[40px]">

@@ -9,14 +9,14 @@ import { redirect } from 'next/navigation'
 const ShopDashboardPage = async () => {
   const session = await getServerSession(OPTIONS)
 
-  if(!session || session.user.role_id == 1){
+  if (!session || session?.user?.role_id == 1) {
     redirect('/')
-  }else if(session.user.role_id == 3){
+  } else if (session?.user?.role_id == 3) {
     redirect('/admin')
   }
 
   const orders = await fetch(
-    `http://localhost:3000/api/admin/canteens/${session.user.canteen_id}/orders/users`
+    `http://localhost:3000/api/admin/canteens/${session?.user?.canteen_id}/orders/users`
   )
     .then((response) => response.json())
     .then((data) => data)

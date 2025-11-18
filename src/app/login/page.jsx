@@ -5,7 +5,7 @@ import { redirect, useRouter } from 'next/navigation'
 import FullScreenLoader from '@/components/FullScreenLoader'
 
 const Page = () => {
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession()
   const router = useRouter()
   const [phNo, setPhNo] = useState('')
   const [password, setPassword] = useState('')
@@ -13,10 +13,10 @@ const Page = () => {
 
   if (status === 'loading') {
     return <FullScreenLoader />
-  } else if (session.user.role_id == 2) {
-    redirect('/canteenOwner');
-  } else if (session.user.role_id == 3) {
-    redirect('/admin');
+  } else if (session?.user?.role_id == 2) {
+    redirect('/canteenOwner')
+  } else if (session?.user?.role_id == 3) {
+    redirect('/admin')
   }
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -92,12 +92,12 @@ const Page = () => {
             />
           </div>
 
-          <div className="flex items-center mb-[24px]">
+          {/* <div className="flex items-center mb-[24px]">
             <input type="checkbox" id="remember" className="mr-[8px]" />
             <label htmlFor="remember" className="text-sm">
               Remember me
             </label>
-          </div>
+          </div> */}
 
           <button
             type="submit"

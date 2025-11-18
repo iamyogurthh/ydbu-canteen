@@ -2,24 +2,20 @@ import { ShoppingCartProvider } from '@/context/ShoppingCartContext'
 import Navbar from '../components/Navbar'
 import './globals.css'
 import AuthProvider from '@/context/AuthProvider'
-import { getServerSession } from 'next-auth'
-import { redirect } from 'next/navigation'
-import { OPTIONS } from './api/auth/[...nextauth]/route'
+import { Suspense } from 'react'
+import { NavbarWrapper } from '@/components/NavbarWrapper'
+import FullScreenLoader from '@/components/FullScreenLoader'
 
-
-export default async function RootLayout({ children }) {
-  const session = await getServerSession(OPTIONS)
-
-  const hideNav = session?.user?.role_id === 2 || session?.user?.role_id === 3
-
-
-
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="relative">
         <AuthProvider>
           <ShoppingCartProvider>
-            {!hideNav && <Navbar />}
+            {/* Suspense handles loading of client components */}
+            <Suspense fallback={<FullScreenLoader />}>
+              <NavbarWrapper />
+            </Suspense>
             {children}
           </ShoppingCartProvider>
         </AuthProvider>

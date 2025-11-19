@@ -9,6 +9,15 @@ export async function getCanteenById(id){
     return canteen[0];
 }
 
+export async function getAllCanteens(){
+    const [canteens] = await pool.query( 
+        `
+            SELECT * FROM Canteen
+        `
+    );
+    return canteens;
+}
+
 export async function getCanteenByName(canteen_name){
     const [canteen] = await pool.query( 
         `

@@ -1,6 +1,6 @@
-import { getCanteens } from "@/models/canteen";
+import { getCanteensWithOwnerInfo } from "@/models/canteen";
 
 export async function GET() {
-    const canteens = await getCanteens();
-    return NextResponse.json(canteens);
+    const canteens = await getCanteensWithOwnerInfo();
+    return Response.json(canteens);
 }

@@ -1,9 +1,9 @@
-import { createCanteen, getCanteensWithOwnerInfo } from "@/models/canteen";
+import { createCanteen, getAllCanteens, getCanteensWithOwnerInfo } from "@/models/canteen";
 import { createUserForCanteenOwner } from "@/models/user";
 import { getDataFromForm, handleImage } from "@/utils/backendUtils";
 
 export async function GET() {
-    const canteens = await getCanteensWithOwnerInfo();
+    const canteens = await getAllCanteens();
     return Response.json(canteens);
 }
 

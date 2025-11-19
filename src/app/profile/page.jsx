@@ -15,7 +15,6 @@ function Page() {
   const [selectedOrder, setSelectedOrder] = useState(null)
 
   useEffect(() => {
-    // Wait until session is loaded
     if (!session || status !== 'authenticated') return
 
     async function getData() {
@@ -42,19 +41,12 @@ function Page() {
     getData()
   }, [status, session])
 
-  console.log(orderHistoryList)
-
-  // Waiting for session
   if (status === 'loading') return <FullScreenLoader />
-
-  // If user logged out or session not ready
   if (!session) return <FullScreenLoader />
 
-  // Redirect according to user role
   if (session.user.role_id == 2) redirect('/canteenOwner')
   if (session.user.role_id == 3) redirect('/admin')
 
-  // Wait for user data
   if (loading || !user) return <FullScreenLoader />
 
   const tableRowElements = [
@@ -65,18 +57,18 @@ function Page() {
   ]
 
   return (
-    <div className="pl-4 md:pl-[40px] pt-[40px] w-full">
+    <div className="w-full px-4 md:px-[40px] pt-[40px] pb-[60px]">
       <h1 className="font-bold text-[20px] md:text-[24px] mb-[24px]">
         My Profile
       </h1>
 
       {/* USER INFO TABLE */}
       <div className="w-full overflow-x-auto">
-        <table className="min-w-[300px]">
+        <table className="min-w-[320px]">
           <tbody>
             {tableRowElements.map((item, index) => (
               <tr key={index} className="block md:table-row mb-4 md:mb-0">
-                <td className="py-2 pr-[32px] font-bold block md:table-cell">
+                <td className="py-2 pr-[32px] font-bold block md:table-cell whitespace-nowrap">
                   {item.label}
                 </td>
                 <td className="py-2 block md:table-cell">{item.value}</td>
@@ -86,7 +78,7 @@ function Page() {
         </table>
       </div>
 
-      {/* LOGOUT */}
+      {/* LOGOUT BUTTON */}
       <button
         onClick={() => signOut({ redirect: '/' })}
         className="bg-accent text-white py-[10px] px-[48px] md:px-[68px] rounded-[24px] shadow-lg mt-[40px] cursor-pointer"
@@ -95,20 +87,24 @@ function Page() {
       </button>
 
       {/* ORDER HISTORY */}
-      <div>
-        <h1 className="mt-8 text-lg text-accent font-semibold">
-          Order History
-        </h1>
+      <div className="mt-10">
+        <h1 className="text-lg text-accent font-semibold">Order History</h1>
 
         <div className="overflow-x-auto border border-gray-300 rounded-[16px] mt-4">
-          <table className="w-full bg-white">
+          <table className="w-full bg-white min-w-[600px]">
             <thead className="bg-red-600 text-white">
               <tr>
-                <th className="px-4 py-2 text-left">Order Id</th>
-                <th className="px-4 py-2 text-left">Name</th>
-                <th className="px-4 py-2 text-left">Phone</th>
-                <th className="px-4 py-2 text-left">Location</th>
-                <th className="px-4 py-2 text-left">Ordered Date</th>
+                <th className="px-4 py-2 text-left whitespace-nowrap">
+                  Order Id
+                </th>
+                <th className="px-4 py-2 text-left whitespace-nowrap">Name</th>
+                <th className="px-4 py-2 text-left whitespace-nowrap">Phone</th>
+                <th className="px-4 py-2 text-left whitespace-nowrap">
+                  Location
+                </th>
+                <th className="px-4 py-2 text-left whitespace-nowrap">
+                  Ordered Date
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -134,7 +130,7 @@ function Page() {
           </table>
         </div>
 
-        {/*For Client  MODAL */}
+        {/* MODAL */}
         {selectedOrder && (
           <ClientOrderDetailModal
             order={selectedOrder}

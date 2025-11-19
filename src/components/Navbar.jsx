@@ -49,9 +49,9 @@ const Navbar = () => {
 
       {/* Mobile Dropdown Menu */}
       {open && (
-        <div className="md:hidden mt-4 space-y-4 pb-4 relative flex justify-between">
+        <div className="md:hidden mt-4 space-y-4 pb-4">
           {/* Mobile Search */}
-          <div>
+          <div className="w-full">
             <SearchBox />
           </div>
 
@@ -59,13 +59,23 @@ const Navbar = () => {
           {!session ? (
             <Link
               href="/login"
-              className="block py-2 px-4 bg-accent text-white rounded-3xl shadow-md text-center"
+              className="
+          block
+          w-full
+          py-2
+          bg-accent
+          text-white
+          rounded-3xl
+          shadow-md
+          text-center
+          font-semibold
+        "
             >
               Login
             </Link>
           ) : (
             session.user.role_id == 1 && (
-              <div>
+              <div className="w-full">
                 <NavbarLoggedInUser />
               </div>
             )

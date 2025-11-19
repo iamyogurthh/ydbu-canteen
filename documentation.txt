@@ -34,14 +34,15 @@ DEFAULT_USER_IMAGE_PATH = /sample_img/user.jpg
 -------------------------------------------------------------------------------------------------------------------------------
                         Get All Canteen
 
-Purpose = to get a list of Canteens
+Purpose = to get a list of Canteens with owner Information
 URL = /api/canteens
 Method = GET
 Response = [
     {
-        "id":1,
-        "name":"Delecious Kitchen",
-        "profile_img":"/canteen_img/canteen1.png"
+        "canteen_id": 1,
+        "canteen_name": "Delecious Kitchen",
+        "created_at": "2025-11-19T06:36:14.000Z",
+        "owner_name": "Daw Mya"
     },
     ...
 ]
@@ -55,13 +56,14 @@ Method = GET
 Response = [
     {
         "id": 1,
-        "role_id": 1,
+        "role_id": 2,
         "canteen_id": null,
         "ph_no": "0911111111",
         "name": "Headmaster U Aung",
         "nrc": "12/MaKaNa(N)123456",
         "current_address": "Yangon",
-        "password": "pass123"
+        "password": "pass123",
+        "canteen_name" : "kaung"
     },
     ....
 ]
@@ -250,12 +252,17 @@ Purpose = To Create A Canteen
 URL = /api/canteens/
 Method = POST
 Body(form) = {
-    name,
+    canteen_name,
     profile_img,
     cover_img,
+    'ph_no',
+    'user_name',
+    'nrc',
+    'current_address',
+    'password'
 }
 Response = {
-   message :  "Canteen Created Successfully"
+   message :  "Created Successfully"
 }
 
 
@@ -422,3 +429,57 @@ Response = {
 
 
 ----------------------------------------------------------------------------------------------
+                                User
+----------------------------------------------------------------------------------------------
+                        Get User Order History
+
+Purpose = To get User Order History
+URL = /api/orders/history/[user_id]
+Method = GET
+Response = [
+    {
+        "order_id": 3,
+        "user_id": 2,
+        "name": "mgmg",
+        "phone": "4325342",
+        "current_location": "loo",
+        "order_date": "2025-11-19T06:57:02.000Z"
+    },
+    {
+        "order_id": 4,
+        "user_id": 2,
+        "name": "mgmg",
+        "phone": "4325211342",
+        "current_location": "loco",
+        "order_date": "2025-11-19T06:57:22.000Z"
+    },
+    ...
+]
+
+-----------------------------------------------------------------------------------------------------
+                        Get User Order Item Related To The Order
+
+Purpose = To Get User Order Item Related To The Order
+URL = /api/orders/history/[user_id]/[order_id]
+Method = GET
+Response = [
+    {
+        "order_item_id": 6,
+        "menu_name": "Beef Noodles",
+        "menu_img": "/sample_img/menu.jpg",
+        "menu_quantity": 2,
+        "menu_price": 55,
+        "menu_total_price": "5345.00",
+        "order_item_status": "pending"
+    },
+    {
+        "order_item_id": 7,
+        "menu_name": "Spaghetti Bolognese",
+        "menu_img": "/sample_img/menu.jpg",
+        "menu_quantity": 2,
+        "menu_price": 60,
+        "menu_total_price": "5345.00",
+        "order_item_status": "pending"
+    },
+    ....
+]

@@ -10,6 +10,7 @@ CREATE TABLE Role(
 CREATE TABLE Canteen(
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) UNIQUE,
+    created_at DATETIME DEFAULT now(),
     cover_img VARCHAR(255) DEFAULT '/sample_img/background.jpg',
     profile_img VARCHAR(255) DEFAULT '/sample_img/canteen.jpg'
 );

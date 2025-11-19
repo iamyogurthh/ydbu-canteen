@@ -3,8 +3,10 @@ import AdminCanteensTable from '@/components/admin/AdminCanteensTable'
 import React, { useEffect, useState } from 'react'
 import SearchBox from '@/components/profile/SearchBox'
 import FullScreenLoader from '@/components/FullScreenLoader'
+import { useSession } from 'next-auth/react'
 
 const page = () => {
+  const { data: session, status } = useSession();
   const [isLoading, setIsLoading] = useState(false)
   const [canteens, setCanteens] = useState([])
 
@@ -27,9 +29,16 @@ const page = () => {
     getData()
   }, [])
 
-  // if (isLoading) {
-  //   return <FullScreenLoader />
-  // }
+  if (status === 'loading') {
+    return <FullScreenLoader />
+  } else {
+    if (!session || session?.user?.role_id == 1) {
+      redirect('/')
+    } else if (session?.user?.role_id == 2) {
+      redirect('/canteenOwner')
+    }
+  }
+
   return (
     <div className="pt-[40px] px-[40px]">
       <div className="flex justify-center mb-4">

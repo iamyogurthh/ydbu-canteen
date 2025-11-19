@@ -30,6 +30,25 @@ export async function getOrderItemById(id) {
     return item[0];
 }
 
+export async function getOrderItemsByOrderId(id) {
+    const [item] = await pool.query(
+        `
+        SELECT oi.id as order_item_id,
+        menu.name as menu_name,
+        menu.img as menu_img,
+        oi.quantity as menu_quantity,
+        menu.price as menu_price,
+        oi.total_price as menu_total_price,
+        oi.status as order_item_status
+        FROM orderItems oi INNER JOIN menu
+        ON oi.menu_id = menu.id
+        WHERE order_id=?
+        `, [id]
+    )
+    return item;
+}
+
+
 async function getDifferentOrderId(canteen_id) {
     const [orderIds] = await pool.query(
         `

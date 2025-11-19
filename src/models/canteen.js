@@ -18,23 +18,24 @@ export async function getCanteenByName(canteen_name){
     return canteen[0];
 }
 
-export async function getCanteens(){
-    const [canteens] = await pool.query('SELECT * FROM Canteen');
+export async function getCanteensWithOwnerInfo(){
+    const [canteens] = await pool.query(`SELECT c.id as canteen_id,
+    c.name as canteen_name,
+    c.created_at as created_at,
+    u.name as owner_name FROM Canteen as c INNER JOIN user u
+    on c.id = u.canteen_id`);
     return canteens;
 }
 
 //--------------------Create & UPDATE Section------------------------
 
 export async function createCanteen(name,profile_img,cover_img){
-    const isok = await pool.query(
+    const [result] = await pool.query(
         `
         INSERT INTO Canteen (name,profile_img,cover_img) VALUES (?,?,?)
         `,[name,profile_img,cover_img]
     );
-    if(isok){
-        return true;
-    }
-    return false;
+    return result?.insertId ?? null;
 }
 
 export async function updateCanteen(id,name,profile_img,cover_img){

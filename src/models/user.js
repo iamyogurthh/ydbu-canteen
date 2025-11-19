@@ -1,6 +1,6 @@
 import pool from "@/database/database";
 
-export async function getAllUsers(){
+export async function getAllUsers() {
     const [users] = await pool.query(`SELECT * FROM user`)
     return users;
 }
@@ -12,7 +12,7 @@ export async function getUserByPhone(phone) {
     return user[0];
 }
 
-export async function getUserById(id){
+export async function getUserById(id) {
     const [user] = await pool.query(`
     SELECT * FROM User WHERE id=?
     `, [id])
@@ -24,7 +24,7 @@ export async function createUser({
     name,
     nrc,
     current_address,
-    password, }) {
+    password }) {
     const [result] = await pool.query(
         `
       INSERT INTO User (ph_no, name, nrc, current_address, password)
@@ -36,13 +36,32 @@ export async function createUser({
     return result.insertId;
 }
 
-export async function updateUser(id,ph_no,
+export async function createUserForCanteenOwner({
+    ph_no,
     name,
     nrc,
     current_address,
-    password){
-        const isok = await pool.query(
-            `
+    password,
+    canteen_id
+}) {
+    const [result] = await pool.query(
+        `
+      INSERT INTO User (ph_no, name, nrc, current_address, password , canteen_id, role_id)
+      VALUES (?, ?, ?, ?, ?, ?, 2)
+      `,
+        [ph_no, name, nrc, current_address, password, canteen_id]
+    );
+
+    return result?.insertId || null;
+}
+
+export async function updateUser(id, ph_no,
+    name,
+    nrc,
+    current_address,
+    password) {
+    const isok = await pool.query(
+        `
             UPDATE User SET
             ph_no = ?,
             name = ?,
@@ -51,12 +70,12 @@ export async function updateUser(id,ph_no,
             password = ?
             WHERE id = ?;
 
-            `,[ph_no,name,nrc,current_address,password,id]
-        )
-        if(isok){
-            return true;
-        }
-        return false;
+            `, [ph_no, name, nrc, current_address, password, id]
+    )
+    if (isok) {
+        return true;
+    }
+    return false;
 }
 
 export async function deleteUserById(id) {

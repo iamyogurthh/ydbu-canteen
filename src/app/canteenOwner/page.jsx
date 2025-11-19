@@ -30,7 +30,7 @@ function page() {
 if (status === "loading") {
   return <FullScreenLoader />
 }else{
-  if(!session){
+  if(!session || session?.user?.role_id == 1){
     redirect('/')
   }else if(session.user.role_id == 3){
     redirect('/admin');

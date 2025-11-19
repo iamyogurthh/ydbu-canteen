@@ -3,8 +3,10 @@
 import React, { useState, useEffect } from 'react'
 import FullScreenLoader from '@/components/FullScreenLoader'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
 const CreateCanteenPage = () => {
+  const {data : session , status} = useSession();
   const router = useRouter()
 
   const [data, setData] = useState({
@@ -29,6 +31,16 @@ const CreateCanteenPage = () => {
         URL.revokeObjectURL(previewUrls.profile_img)
     }
   }, [previewUrls])
+
+  if (status === 'loading') {
+    return <FullScreenLoader />
+  } else {
+    if (!session || session?.user?.role_id == 1) {
+      redirect('/')
+    } else if (session?.user?.role_id == 2) {
+      redirect('/canteenOwner')
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()

@@ -1,46 +1,61 @@
 'use client'
+
 import React, { useEffect, useState } from 'react'
 import { redirect } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
 import FullScreenLoader from '@/components/FullScreenLoader'
+import { formatDateTime } from '@/utils/formatDateTime'
+import ClientOrderDetailModal from '@/components/profile/ClientOrderDetailModal'
 
-function page() {
-
+function Page() {
+  const { data: session, status } = useSession()
   const [loading, setLoading] = useState(false)
-  const { data: session ,status } = useSession()
   const [user, setUser] = useState(null)
-  useEffect(() => {
+  const [orderHistoryList, setOrderHistoryList] = useState([])
+  const [selectedOrder, setSelectedOrder] = useState(null)
 
-    async function getUser() {
+  useEffect(() => {
+    // Wait until session is loaded
+    if (!session || status !== 'authenticated') return
+
+    async function getData() {
       try {
         setLoading(true)
-        const res = await fetch(
-          `http://localhost:3000/api/users/${session.user.ph_no}`
-        )
-        const data = await res.json()
-        setUser(data)
-        setLoading(false)
+
+        const [userRes, orderRes] = await Promise.all([
+          fetch(`/api/users/${session.user.ph_no}`),
+          fetch(`/api/orders/history/${session.user.id}`),
+        ])
+
+        const users = await userRes.json()
+        setUser(users)
+
+        const orders = await orderRes.json()
+        setOrderHistoryList(orders)
       } catch (error) {
         console.log(error)
+      } finally {
         setLoading(false)
       }
     }
 
-    getUser()
-  }, [status])
-  
+    getData()
+  }, [status, session])
+
+  console.log(orderHistoryList)
+
+  // Waiting for session
+  if (status === 'loading') return <FullScreenLoader />
+
+  // If user logged out or session not ready
+  if (!session) return <FullScreenLoader />
+
+  // Redirect according to user role
+  if (session.user.role_id == 2) redirect('/canteenOwner')
+  if (session.user.role_id == 3) redirect('/admin')
+
+  // Wait for user data
   if (loading || !user) return <FullScreenLoader />
-
-  if(status === 'loading'){
-    return <FullScreenLoader />
-  }else if(session.user.role_id == 2){
-    redirect('/canteenOwner');
-  }else if(session.user.role_id == 3){
-    redirect('/admin');
-  }
-
-
-  
 
   const tableRowElements = [
     { label: 'Name', value: session.user.name },
@@ -55,7 +70,7 @@ function page() {
         My Profile
       </h1>
 
-      {/* Responsive Table */}
+      {/* USER INFO TABLE */}
       <div className="w-full overflow-x-auto">
         <table className="min-w-[300px]">
           <tbody>
@@ -71,23 +86,64 @@ function page() {
         </table>
       </div>
 
+      {/* LOGOUT */}
       <button
         onClick={() => signOut({ redirect: '/' })}
-        className="
-          bg-accent 
-          text-white 
-          py-[10px] 
-          px-[48px] md:px-[68px] 
-          rounded-[24px] 
-          shadow-lg 
-          mt-[40px] 
-          cursor-pointer
-        "
+        className="bg-accent text-white py-[10px] px-[48px] md:px-[68px] rounded-[24px] shadow-lg mt-[40px] cursor-pointer"
       >
         Logout
       </button>
+
+      {/* ORDER HISTORY */}
+      <div>
+        <h1 className="mt-8 text-lg text-accent font-semibold">
+          Order History
+        </h1>
+
+        <div className="overflow-x-auto border border-gray-300 rounded-[16px] mt-4">
+          <table className="w-full bg-white">
+            <thead className="bg-red-600 text-white">
+              <tr>
+                <th className="px-4 py-2 text-left">Order Id</th>
+                <th className="px-4 py-2 text-left">Name</th>
+                <th className="px-4 py-2 text-left">Phone</th>
+                <th className="px-4 py-2 text-left">Location</th>
+                <th className="px-4 py-2 text-left">Ordered Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orderHistoryList.map((order) => (
+                <tr
+                  key={order.order_id}
+                  className="hover:bg-gray-100 cursor-pointer odd:bg-[#d7222217]"
+                  onClick={(e) => {
+                    if (e.target.closest('.action-cell')) return
+                    setSelectedOrder(order)
+                  }}
+                >
+                  <td className="px-4 py-2">{order.order_id}</td>
+                  <td className="px-4 py-2">{order.name}</td>
+                  <td className="px-4 py-2">{order.phone}</td>
+                  <td className="px-4 py-2">{order.current_location}</td>
+                  <td className="px-4 py-2">
+                    {formatDateTime(order.order_date)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/*For Client  MODAL */}
+        {selectedOrder && (
+          <ClientOrderDetailModal
+            order={selectedOrder}
+            onClose={() => setSelectedOrder(null)}
+          />
+        )}
+      </div>
     </div>
   )
 }
 
-export default page
+export default Page

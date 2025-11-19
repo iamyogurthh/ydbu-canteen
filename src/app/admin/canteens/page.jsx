@@ -6,7 +6,7 @@ import FullScreenLoader from '@/components/FullScreenLoader'
 import { useSession } from 'next-auth/react'
 
 const page = () => {
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession()
   const [isLoading, setIsLoading] = useState(false)
   const [canteens, setCanteens] = useState([])
 
@@ -16,7 +16,7 @@ const page = () => {
     const getData = async () => {
       setIsLoading(true)
       try {
-        const res = await fetch('/api/canteens')
+        const res = await fetch('/api/canteens/self')
         const data = await res.json()
         setCanteens(data)
       } catch (e) {
@@ -44,7 +44,7 @@ const page = () => {
       <div className="flex justify-center mb-4">
         <SearchBox />
       </div>
-      <AdminCanteensTable />
+      <AdminCanteensTable canteens={canteens} />
     </div>
   )
 }

@@ -7,6 +7,8 @@ const AdminUsersTable = ({ users: initialUsers }) => {
   const [users, setUsers] = useState(initialUsers)
   const [loadingId, setLoadingId] = useState(null)
 
+  console.log(users)
+
   useEffect(() => {
     setUsers(initialUsers)
   }, [initialUsers])
@@ -65,7 +67,16 @@ const AdminUsersTable = ({ users: initialUsers }) => {
               <td className="px-4 py-2">{user.id}</td>
               <td className="px-4 py-2">{user.name}</td>
               <td className="px-4 py-2">{user.ph_no}</td>
-              <td className="px-4 py-2">{determineRole(user.role_id)}</td>
+              <td className="px-4 py-2">
+                <div className="">
+                  {determineRole(user.role_id)}
+                  {user.canteen_name && (
+                    <p className="font-bold text-accent">
+                      ({user.canteen_name})
+                    </p>
+                  )}
+                </div>
+              </td>
               <td className="px-4 py-2">{user.current_address}</td>
               <td className="px-4 py-2">
                 <button

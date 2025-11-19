@@ -48,14 +48,6 @@ INSERT INTO Canteen (id, name,profile_img) VALUES
 (5, 'Aung Thu Ka', '/canteen_img/canteen5.png'),
 (6, 'Tharaphu', '/canteen_img/canteen6.png');
 
-INSERT INTO Menu (canteen_id, name, quantity, img, price) VALUES
-(1, 'Breakfast Combo Set 1',5, '/menu_img/food1.jpeg', 3200),
-(2, 'Rice and Bean',5, '/menu_img/food2.jpg', 1500),
-(3, 'Nan Gyi Toke',5, '/menu_img/food3.jpg', 1500),
-(4, 'Palartar',5, '/menu_img/food4.jpg', 1500),
-(5, 'Mohinga', 5,'/menu_img/food5.jpg', 2500),
-(6, 'Mohinga with fried beans', 5,'/menu_img/food6.jpg', 1500);
-
 INSERT INTO Menu (canteen_id, name, price) VALUES
 (1, 'Chicken Rice', 45),
 (1, 'Veggie Burger',50),

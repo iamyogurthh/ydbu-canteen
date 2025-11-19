@@ -14,6 +14,8 @@ function page() {
       redirect('/')
     } else if (session?.user?.role_id == 2) {
       redirect('/canteenOwner')
+    } else if (session?.user?.role_id == 3) {
+      redirect('/admin/canteens')
     }
   }
 

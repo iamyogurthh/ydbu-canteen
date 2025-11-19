@@ -39,3 +39,7 @@ body {
 .active {
   @apply bg-[var(--accent)] text-white shadow-lg;
 }
+
+.input {
+  @apply border border-gray-300 rounded-lg px-4 py-2 w-full focus:ring-2 focus:ring-[var(--accent)] focus:outline-none;
+}

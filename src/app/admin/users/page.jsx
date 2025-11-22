@@ -5,6 +5,7 @@ import SearchBox from '@/components/profile/SearchBox'
 import FullScreenLoader from '@/components/FullScreenLoader'
 import AdminUsersTable from '@/components/admin/AdminUsersTable'
 import { useSession } from 'next-auth/react'
+import { redirect } from 'next/navigation'
 
 const page = () => {
   const {data : session , status} = useSession();

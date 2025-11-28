@@ -1,18 +1,31 @@
-import React from 'react'
+'use client'
+import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
 
 const SearchBox = () => {
+  const router = useRouter()
+  const [searchText, setSearchText] = useState('')
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    if (!searchText.trim()) return
+    router.push(`/searchResult?search=${encodeURIComponent(searchText)}`)
+  }
+
   return (
-    <form className="relative flex items-center w-full">
+    <form className="relative flex items-center w-full" onSubmit={handleClick}>
       <input
         placeholder="Search"
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
         className="
           w-full 
-          max-w-full            /* allow full width in parent */
-          md:max-w-[360px]      /* wider on desktop */
+          max-w-full
+          md:max-w-[360px]
           h-[40px] 
           rounded-[24px] 
           pl-[16px] 
-          pr-[48px]             /* enough space for icon */
+          pr-[48px]
           shadow-lg 
           border-[2px] 
           border-red-600
@@ -32,6 +45,7 @@ const SearchBox = () => {
           -translate-y-1/2 
           cursor-pointer
         "
+        onClick={handleClick}
       />
     </form>
   )

@@ -85,6 +85,47 @@ export async function getOrderUsers(canteen_id) {
 
 }
 
+//
+export async function searchOrderUsers(canteen_id, searchName = "") {
+    const orderIds = await getDifferentOrderId(canteen_id);
+    const users = [];
+ 
+    for (let i = 0; i < orderIds.length; i++) {
+        let status = 'delivered';
+
+        const orderDetail = await getOrderById(orderIds[i].order_id);
+
+        // If name does not match search, skip this user
+        if (!orderDetail.name.toLowerCase().includes(searchName.toLowerCase())) {
+            continue;
+        }
+
+        const orderItems = await getOrderItemsByOrderIdAndCanteenId(
+            orderIds[i].order_id,
+            canteen_id
+        );
+
+        for (let j = 0; j < orderItems.length; j++) {
+            if (orderItems[j].status === 'pending') {
+                status = 'pending';
+                break;
+            }
+        }
+
+        users.push({
+            customer_id: orderDetail.user_id,
+            order_id: orderIds[i].order_id,
+            name: orderDetail.name,
+            phone: orderDetail.phone,
+            location: orderDetail.current_location,
+            status
+        });
+    }
+
+    return users;
+}
+
+
 
 export async function getOrdersByOrderIdAndCanteenId(order_id, canteen_id) {
     console.log("I am order and canteen", order_id, canteen_id)

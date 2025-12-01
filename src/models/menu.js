@@ -8,6 +8,28 @@ export async function getAllMenuByCanteenId(id){
     return {canteen : canteen[0],menus}
 }
 
+export async function searchMenu(name){
+    const [menus] = await pool.query(
+        `
+        SELECT 
+            Menu.*, 
+            Canteen.name AS canteen_name,
+            Canteen.cover_img,
+            Canteen.profile_img,
+            Canteen.created_at
+        FROM Menu
+        INNER JOIN Canteen ON Menu.canteen_id = Canteen.id
+        WHERE Menu.status = 'available'
+          AND Menu.name LIKE ?
+        `,
+        [`%${name}%`]
+    );
+
+    return menus;
+}
+
+
+
 export async function getAvailableMenuByCanteenId(id){
     const [canteen] = await pool.query(`
     SELECT * FROM Canteen WHERE id=?`,[id]);

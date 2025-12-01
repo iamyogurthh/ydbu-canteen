@@ -9,6 +9,20 @@ export async function getCanteenById(id){
     return canteen[0];
 }
 
+export async function searchCanteen(name){
+    const [canteens] = await pool.query(
+        `
+        SELECT *
+        FROM Canteen
+        WHERE name LIKE ?
+        `,
+        [`%${name}%`]
+    );
+
+    return canteens;
+}
+
+
 export async function getAllCanteens(){
     const [canteens] = await pool.query( 
         `
@@ -35,6 +49,26 @@ export async function getCanteensWithOwnerInfo(){
     on c.id = u.canteen_id`);
     return canteens;
 }
+
+export async function searchCanteensWithOwnerInfo(searchName = "") {
+    const [canteens] = await pool.query(
+        `
+        SELECT 
+            c.id AS canteen_id,
+            c.name AS canteen_name,
+            c.created_at AS created_at,
+            u.name AS owner_name
+        FROM Canteen AS c
+        INNER JOIN User AS u
+            ON c.id = u.canteen_id
+        WHERE c.name LIKE ?
+        `,
+        [`%${searchName}%`]
+    );
+
+    return canteens;
+}
+
 
 //--------------------Create & UPDATE Section------------------------
 

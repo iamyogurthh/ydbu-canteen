@@ -1,9 +1,16 @@
-import { createCanteen, getAllCanteens, getCanteensWithOwnerInfo } from "@/models/canteen";
+import { createCanteen, getAllCanteens, getCanteensWithOwnerInfo, searchCanteen } from "@/models/canteen";
 import { createUserForCanteenOwner } from "@/models/user";
 import { getDataFromForm, handleImage } from "@/utils/backendUtils";
 
-export async function GET() {
-    const canteens = await getAllCanteens();
+export async function GET(req) {
+    const { searchParams } = new URL(req.url);
+    const keyword = searchParams.get("keyword");
+    let canteens;
+    if (keyword) {
+        canteens = await searchCanteen(keyword);
+    } else {
+        canteens = await getAllCanteens();
+    }
     return Response.json(canteens);
 }
 
@@ -33,7 +40,7 @@ export async function POST(req) {
         }
         const canteen_id = await createCanteen(canteen_name, profile_img, cover_img);
         if (canteen_id) {
-            const userId = await createUserForCanteenOwner({ ph_no, name : user_name, nrc, current_address, password, canteen_id });
+            const userId = await createUserForCanteenOwner({ ph_no, name: user_name, nrc, current_address, password, canteen_id });
             return Response.json({ message: "Successfully Created" })
         }
         return Response.json({ mesage: "Canteen can't be created" }, { status: 400 })

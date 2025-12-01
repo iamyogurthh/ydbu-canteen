@@ -78,6 +78,28 @@ Response = [
 
 
 ----------------------------------------------------------------------------------------------------
+                        Search user(s)
+
+Purpose = to search user(s)
+URL = /api/users?keyword=something
+Method = GET
+Response = [
+    {
+        "id": 1,
+        "role_id": 2,
+        "canteen_id": null,
+        "ph_no": "0911111111",
+        "name": "Headmaster U Aung",
+        "nrc": "12/MaKaNa(N)123456",
+        "current_address": "Yangon",
+        "password": "pass123",
+        "canteen_name" : "kaung"
+    },
+    ....
+]
+
+
+----------------------------------------------------------------------------------------------------
                         Get All Order
 
 Purpose = to get a list of Orders
@@ -206,6 +228,27 @@ Body(Json Data) = [
   }
 ]
 
+---------------------------------------------------------------------------------------------
+                            Search Menu(s)
+
+
+Purpose = "To Search Menu(s)"
+URL = /api/menus?keyword=something
+Method = GET
+Response = [
+    {
+        "id": 8,
+        "canteen_id": 3,
+        "name": "Paneer Wrap",
+        "img": "/sample_img/menu.jpg",
+        "status": "available", "price": 45,
+        "canteen_name": "U Shwe Yoe",
+        "cover_img": "/sample_img/background.jpg",
+        "profile_img": "/canteen_img/canteen3.png",
+        "created_at": "2025-11-22T08:55:00.000Z"
+    },
+    .....
+]
 
 
 ------------------------------------------------------------------------
@@ -233,7 +276,58 @@ Response = [
 ]
 
 
+
 ---------------------------------------------------------------------------------------------
+    For Admin
+                            Search Canteen(s) **with** owner Information By Canteen Name
+
+
+Purpose = Search Canteen(s) with owner Information By Canteen Name
+URL = /api/canteens/self?keyword=something
+Method = GET
+Response = [
+    {
+        "canteen_id": 1,
+        "canteen_name": "Delecious Kitchen",
+        "created_at": "2025-11-19T06:36:14.000Z",
+        "owner_name": "Daw Mya"
+    },
+    {
+        "canteen_id": 2,
+        "canteen_name": "Food Conner",
+        "created_at": "2025-11-19T06:36:14.000Z",
+        "owner_name": "Ko Ko"
+    },
+    ...
+]
+
+
+
+---------------------------------------------------------------------------------------------
+        For User
+                            Search Canteen(s) **without** owner Information By Canteen Name
+
+
+Purpose = Search Canteen(s) without owner Information By Canteen Name
+URL = /api/canteens?keyword=something
+Method = GET
+Response = [
+    {
+        id : 1,
+        name : "shwe yoe",
+        profile_img : "photo",
+        cover_img : "photo",
+        created_at : "2025-11-19T06:36:14.000Z"
+    },
+    ...
+]
+
+
+
+---------------------------------------------------------------------------------------------
+                        Get A List Of User Order Which Are Belong To The Canteen
+
+
 Purpose = "To Get A List Of User Order Which Are Belong To The Canteen"
 URL = /api/admin/canteens/[canteen_id]/orders/users
 Method = GET
@@ -251,8 +345,33 @@ Response = [
 
 
 
-------------------------------------------------------------------------
 
+
+------------------------------------------------------------------------
+                        Search User Order(s) Which Are Belong To The Canteen By User Name
+
+
+Purpose = Search User Order(s) Which Are Belong To The Canteen By User Name
+URL = /api/admin/canteens/[canteen_id]/orders/users?keyword=something
+Method = GET
+Response = [
+    {
+        "customer_id":6,
+        "name":"Ko Ko",
+        "phone":"0922222223",
+        "major":"Physics",
+        "location":"CTC3",
+    }
+    ,
+    ...
+]
+
+
+
+
+
+------------------------------------------------------------------------
+                Get A Specific Order That Is Belong To A User
 
 
 

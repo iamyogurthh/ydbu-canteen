@@ -1,5 +1,18 @@
-import { createMenu } from "@/models/menu";
+import { createMenu, searchMenu } from "@/models/menu";
 import { getDataFromForm, handleImage } from "@/utils/backendUtils";
+
+
+export async function GET(req) {
+    const { searchParams } = new URL(req.url);
+    const keyword = searchParams.get("keyword");
+    let menus;
+    if (keyword) {
+        menus = await searchMenu(keyword);
+    } else {
+        menus = {message : "no Menu"}
+    }
+    return Response.json(menus);
+}
 
 export async function POST(req) {
     const formData = await req.formData();

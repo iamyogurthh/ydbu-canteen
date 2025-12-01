@@ -5,6 +5,21 @@ export async function getAllUsers() {
     return users;
 }
 
+
+export async function searchUsers(name) {
+    const [users] = await pool.query(
+        `
+        SELECT *
+        FROM User
+        WHERE name LIKE ?
+        `,
+        [`%${name}%`]
+    );
+
+    return users;
+}
+
+
 export async function getUserByPhone(phone) {
     const [user] = await pool.query(`
     SELECT * FROM User WHERE ph_no=?

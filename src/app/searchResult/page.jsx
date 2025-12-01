@@ -1,6 +1,19 @@
+'use client';
+import FullScreenLoader from '@/components/FullScreenLoader';
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 import React from 'react'
 
 const Page = ({ searchParams }) => {
+  const { data: session, status } = useSession()
+
+  if (status === 'loading') {
+    return <FullScreenLoader />
+  } else if (session?.user?.role_id == 2) {
+    redirect('/canteenOwner')
+  } else if (session?.user?.role_id == 3) {
+    redirect('/admin')
+  }
   const query = searchParams?.search || ''
 
   return (

@@ -21,7 +21,12 @@ body {
 }
 
 .responsive-grid {
-  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8;
+  @apply grid 
+    grid-cols-2        /* 2 columns on mobile */
+    sm:grid-cols-2      /* small screens */
+    md:grid-cols-3      /* tablets */
+    lg:grid-cols-4      /* laptops */
+    gap-4 sm:gap-6;
 }
 
 .overlay {

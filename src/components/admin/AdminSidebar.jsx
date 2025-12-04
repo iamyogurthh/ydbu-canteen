@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import FullScreenLoader from '../FullScreenLoader'
@@ -17,9 +17,13 @@ const AdminSidebar = () => {
     }
   }, [status, router])
 
-  if (status === 'loading') return <FullScreenLoader /> // or a loader
+  if (status === 'loading') {
+    return <FullScreenLoader />
+  }
 
-  if (!session) return null
+  if (!session) {
+    return null
+  }
 
   return (
     <div className="bg-white fixed top-0 bottom-0 w-[280px] shadow-md px-[12px] py-[16px] flex flex-col items-center justify-between">
@@ -36,7 +40,7 @@ const AdminSidebar = () => {
       <div className="flex flex-col w-full">
         <span className="block border-1 border-[#D1D1D1] w-full"></span>
         <button
-          onClick={() => signOut({ redirect: '/' })}
+          onClick={() => signOut({ redirect: true, callbackUrl: '/' })}
           className="bg-accent text-white py-[10px] px-[68px] rounded-[24px] shadow-lg mt-[16px] cursor-pointer"
         >
           Logout

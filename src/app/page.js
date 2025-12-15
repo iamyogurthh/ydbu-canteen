@@ -1,15 +1,18 @@
 'use client'
 
+import { redirect } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import CanteenCard from '@/components/CanteenCard'
+import { useSession } from 'next-auth/react'
+import FullScreenLoader from '@/components/FullScreenLoader'
 
 const CanteensPage = () => {
+  const {data : session , status} = useSession();
   const [canteens, setCanteens] = useState([])
   const [keyword, setKeyword] = useState('')
   const [loading, setLoading] = useState(true)
   const [debouncedKeyword, setDebouncedKeyword] = useState(keyword)
 
-  // Debounce search input
   useEffect(() => {
     const handler = setTimeout(() => setDebouncedKeyword(keyword), 500)
     return () => clearTimeout(handler)
@@ -36,6 +39,14 @@ const CanteensPage = () => {
     }
     fetchCanteens()
   }, [debouncedKeyword])
+  if (status === 'loading') {
+    return <FullScreenLoader />
+  } else if (session?.user?.role_id == 2) {
+    redirect('/canteenOwner')
+  } else if (session?.user?.role_id == 3) {
+    redirect('/admin')
+  }
+  // Debounce search input
 
   return (
     <div className="pt-[90px] pb-10 px-4 md:px-6 lg:px-10">

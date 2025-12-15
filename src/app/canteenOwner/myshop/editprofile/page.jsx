@@ -5,6 +5,21 @@ import FullScreenLoader from '@/components/FullScreenLoader'
 import { redirect, useRouter } from 'next/navigation'
 
 const Page = () => {
+  const router = useRouter()
+  const { data: session , status } = useSession()
+  const id = session?.user?.canteen_id
+  
+  const [data, setData] = useState({
+    name: '',
+    profile_img: '',
+    cover_img: '',
+  })
+  const [isLoading, setIsLoading] = useState(false)
+  const [previewUrls, setPreviewUrls] = useState({
+    profile_img: '',
+    cover_img: '',
+  })
+
   useEffect(() => {
     if (!session) return
     const getPrevProfileData = async () => {
@@ -41,22 +56,9 @@ const Page = () => {
       }
     }
   }, [previewUrls])
-  const router = useRouter()
-  const { data: session , status } = useSession()
-  const id = session?.user?.canteen_id
 
-  const [data, setData] = useState({
-    name: '',
-    profile_img: '',
-    cover_img: '',
-  })
+  
 
-  const [previewUrls, setPreviewUrls] = useState({
-    profile_img: '',
-    cover_img: '',
-  })
-
-  const [isLoading, setIsLoading] = useState(false)
 
   if(status === 'loading' ){
     return <FullScreenLoader/>

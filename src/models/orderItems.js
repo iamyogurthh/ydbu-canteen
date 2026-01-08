@@ -34,6 +34,7 @@ export async function getOrderItemsByOrderId(id) {
     const [item] = await pool.query(
         `
         SELECT oi.id as order_item_id,
+        Canteen.name as canteen_name,
         menu.name as menu_name,
         menu.img as menu_img,
         oi.quantity as menu_quantity,
@@ -42,6 +43,8 @@ export async function getOrderItemsByOrderId(id) {
         oi.status as order_item_status
         FROM orderItems oi INNER JOIN menu
         ON oi.menu_id = menu.id
+        INNER JOIN Canteen 
+        ON menu.canteen_id = Canteen.id
         WHERE order_id=?
         `, [id]
     )

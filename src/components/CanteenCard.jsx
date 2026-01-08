@@ -10,6 +10,9 @@ const CanteenCard = ({ canteen }) => (
       src={canteen.profile_img}
       alt={canteen.name}
       className="w-full h-[200px] object-cover rounded-lg mb-[16px] shadow-sm"
+      style={{
+        objectFit : "fill"
+      }}
     />
     <p className="text-base font-medium">{canteen.name}</p>
   </Link>

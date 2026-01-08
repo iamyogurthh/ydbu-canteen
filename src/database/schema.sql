@@ -41,32 +41,61 @@ CREATE TABLE Menu(
 );
 
 INSERT INTO Canteen (id, name,profile_img) VALUES
-(1, 'Delecious Kitchen', '/canteen_img/canteen1.png'),
-(2, 'Food Conner', '/canteen_img/canteen2.png'),
-(3, 'U Shwe Yoe', '/canteen_img/canteen3.png'),
-(4, 'Myanmmar Foodies House', '/canteen_img/canteen4.png'),
-(5, 'Aung Thu Ka', '/canteen_img/canteen5.png'),
-(6, 'Tharaphu', '/canteen_img/canteen6.png');
+(1, 'ငွေအိုးစည်', '/canteen_img/ngay-owe-si.jpg'),
+(2, 'လရိပ်မွန်', '/canteen_img/la-yate-mon.jpg'),
+(3, 'လင်းလက်ကြယ်', '/canteen_img/linn-lat-kyal.jpg'),
+(4, 'ကြည်ရတနာ', '/canteen_img/kyi-ya-da-nar.jpg'),
+(5, 'ကောင်းကောင်း', '/canteen_img/kaung-kaung.jpg'),
+(6,'လုံမလေး','/canteen_img/lone-ma-lay.jpg');
 
-INSERT INTO Menu (canteen_id, name, price) VALUES
-(1, 'Chicken Rice', 45),
-(1, 'Veggie Burger',50),
-(1, 'Spaghetti Bolognese', 60),
-(2, 'Beef Noodles',55),
-(2, 'Tofu Salad',40),
-(2, 'Fried Rice',50),
-(3, 'Grilled Chicken', 65),
-(3, 'Paneer Wrap',45),
-(3, 'Egg Sandwich', 35),
-(4, 'Fish Curry', 70),
-(4, 'Pasta Alfredo',60),
-(4, 'Club Sandwich', 55),
-(5, 'Mutton Biryani',75),
-(5, 'Chow Mein',50),
-(5, 'Caesar Salad',45),
-(6, 'Sushi Set', 80),
-(6, 'Katsu Don', 65),
-(6, 'Miso Ramen',70);
+INSERT INTO Menu (canteen_id, name, price,img) VALUES
+(1, 'ထမင်းကြော်', 2000,'/menu_img/hta-min-kyaw-1.jpg'),
+(1, 'ထမင်းဆီစမ်း', 1000,'/menu_img/hta-min-see-san-1.jpg'),
+(1, 'လက်ဘက်ထမင်း', 2000,'/menu_img/la-phat-hta-min-1.jpg'),
+(1, 'ကော်ဖီ', 1500,'/menu_img/coffee-1.jpg'),
+(1, 'ရှမ်းခေါက်ဆွဲ', 2000,'/menu_img/shan-1.jpg'),
+(1, 'လက်ဘက်သုပ်', 2000,'/menu_img/la-phat-thoke-1.jpg'),
+(1, 'ပက်ရှူးထမင်း', 3500,'/menu_img/pat-shuu-1.jpg'),
+
+(2, 'ထမင်းကြော်', 2000,'/menu_img/hta-min-kyaw-2.jpg'),
+(2, 'ထမင်းဆီစမ်း', 1000,'/menu_img/hta-min-see-san-2.jpg'),
+(2, 'လက်ဘက်ထမင်း', 1500,'/menu_img/la-phat-hta-min-2.jpg'),
+(2, 'ကော်ဖီ', 1500,'/menu_img/coffee-2.jpg'),
+(2, 'ရှမ်းခေါက်ဆွဲ', 2000,'/menu_img/shan-2.jpg'),
+(2, 'လက်ဘက်သုပ်', 1500,'/menu_img/la-phat-thoke-2.jpg'),
+(2, 'ပက်ရှူးထမင်း', 3000,'/menu_img/pat-shuu-2.jpg'),
+
+(3, 'ထမင်းကြော်', 2000,'/menu_img/hta-min-kyaw-3.jpg'),
+(3, 'ထမင်းဆီစမ်း', 1000,'/menu_img/hta-min-see-san-3.jpg'),
+(3, 'လက်ဘက်ထမင်း', 1800,'/menu_img/la-phat-hta-min-3.jpg'),
+(3, 'ကော်ဖီ', 2000,'/menu_img/coffee-3.jpg'),
+(3, 'ရှမ်းခေါက်ဆွဲ', 1500,'/menu_img/shan-3.jpg'),
+(3, 'လက်ဘက်သုပ်', 2000,'/menu_img/la-phat-thoke-3.jpg'),
+(3, 'ပက်ရှူးထမင်း', 3000,'/menu_img/pat-shuu-3.jpg'),
+
+(4, 'ထမင်းကြော်', 2000,'/menu_img/hta-min-kyaw-4.jpg'),
+(4, 'ထမင်းဆီစမ်း', 1000,'/menu_img/hta-min-see-san-4.jpg'),
+(4, 'လက်ဘက်ထမင်း', 1800,'/menu_img/la-phat-hta-min-4'),
+(4, 'ကော်ဖီ', 1500,'/menu_img/coffee-4.jpg'),
+(4, 'ရှမ်းခေါက်ဆွဲ', 2000,'/menu_img/shan-4.jpg'),
+(4, 'လက်ဘက်သုပ်', 2000,'/menu_img/la-phat-thoke-4.jpg'),
+(4, 'ပက်ရှူးထမင်း', 2500,'/menu_img/pat-shuu-4.jpg'),
+
+(5, 'ထမင်းကြော်', 2000,'/menu_img/hta-min-kyaw-5.jpg'),
+(5, 'ထမင်းဆီစမ်း', 1000,'/menu_img/hta-min-see-san-5.jpg'),
+(5, 'လက်ဘက်ထမင်း', 1800,'/menu_img/la-phat-hta-min-5.jpg'),
+(5, 'ကော်ဖီ', 2000,'/menu_img/coffee-5.jpg'),
+(5, 'ရှမ်းခေါက်ဆွဲ', 2000,'/menu_img/shan-5.jpg'),
+(5, 'လက်ဘက်သုပ်', 1500,'/menu_img/la-phat-thoke-5.jpg'),
+(5, 'ပက်ရှူးထမင်း', 3500,'/menu_img/pat-shuu-5.jpg'),
+
+(6, 'ထမင်းကြော်', 2000,'/menu_img/hta-min-kyaw-6.jpg'),
+(6, 'ထမင်းဆီစမ်း', 1000,'/menu_img/hta-min-see-san-6.jpg'),
+(6, 'လက်ဘက်ထမင်း', 1800,'/menu_img/la-phat-hta-min-6.jpg'),
+(6, 'ကော်ဖီ', 2000,'/menu_img/coffee-6.jpg'),
+(6, 'ရှမ်းခေါက်ဆွဲ', 2000,'/menu_img/shan-6.jpg'),
+(6, 'လက်ဘက်သုပ်', 1600,'/menu_img/la-phat-thoke-6.jpg'),
+(6, 'ပက်ရှူးထမင်း', 3600,'/menu_img/pat-shuu-6.jpg');
 
 INSERT INTO Role (id,name) VALUES 
 (1,'student'),
@@ -82,8 +111,7 @@ INSERT INTO User (role_id,canteen_id, ph_no, name, nrc, current_address, passwor
 (2, 2, '0922222223', 'Ko Ko', '12/MaKaNa(N)123458', 'Yangon', 'pass123'),
 (2, 3, '0922222224', 'Hla Hla', '12/MaKaNa(N)123459', 'Naypyidaw', 'pass123'),
 (2, 4, '0922222225', 'Moe Moe', '12/MaKaNa(N)123460',  'Taunggyi', 'pass123'),
-(2, 5, '0922222226', 'Aye Aye', '12/MaKaNa(N)123461', 'Bago', 'pass123'),
-(2, 6, '0922222227', 'Zaw Zaw', '12/MaKaNa(N)123462', 'Pathein', 'pass123');
+(2, 5, '0922222226', 'Aye Aye', '12/MaKaNa(N)123461', 'Bago', 'pass123');
 
 CREATE TABLE Orders (
     id INT AUTO_INCREMENT PRIMARY KEY,

@@ -46,8 +46,12 @@ const Page = () => {
   }
 
   return (
-    <div className="flex items-center justify-center mt-[117px]">
-      <div className="bg-white px-[40px] pt-[40px] pb-[80px] rounded-[24px] shadow-lg">
+    <div className="flex items-center justify-center w-screen min-h-screen"  style={{
+      backgroundImage : "url('/system_icons/registration.jpg')",
+      backgroundSize: 'cover', 
+      backgroundPosition: 'center',
+    }}>
+      <div className="bg-white px-[40px] pt-[40px] pb-[80px] rounded-[24px] shadow-lg"  >
         <div className="flex items-center justify-center">
           <h1 className="text-[48px] font-medium mr-[16px]">Welcome To</h1>
           <div className="text-left">
@@ -58,7 +62,7 @@ const Page = () => {
           </div>
         </div>
 
-        <form className="mt-[40px]" onSubmit={handleLogin}>
+        <form className="mt-[40px]" onSubmit={handleLogin} >
           {error && (
             <h1 className="text-[24px] bg-red-500 mb-[24px] text-white text-center rounded">
               {error}

@@ -117,15 +117,19 @@ const page = () => {
   }
 
   return (
-    <div className="flex items-center justify-center mt-[117px]">
-      <div className="bg-white px-[400px] pt-[40px] pb-[80px] rounded-[24px] shadow-lg">
+    <div className="font-bold flex items-center justify-center pt-[117px]" style={{
+      backgroundImage : "url('/system_icons/registration.jpg')",
+      backgroundSize: 'cover', 
+      backgroundPosition: 'center',
+    }}>
+      <div className="bg-white/90 p-[50px] rounded-[24px] shadow-lg " >
         <div className="flex items-center justify-center">
           <h1 className="text-[48px] font-medium mr-[16px]">Welcome To</h1>
           <div className="text-left">
             <h1 className="text-[48px] text-accent font-bold mb-[-8px]">
               YDBU
             </h1>
-            <p className="text-[24px] font-medium text-black">Online Canteen</p>
+            <p className="text-[24px] font-medium">Online Canteen</p>
           </div>
         </div>
 
@@ -150,7 +154,7 @@ const page = () => {
 
           <button
             type="submit"
-            className="cursor-pointer bg-accent text-white w-full py-[12px] rounded text-[16px] font-semibold"
+            className="cursor-pointer bg-accent w-full py-[12px] rounded text-[16px] font-semibold"
           >
             Register
           </button>
@@ -159,7 +163,7 @@ const page = () => {
             Already had an account?{' '}
             <a
               href="/login"
-              className="text-accent font-medium hover:underline"
+              className=" text-accent font-medium hover:underline"
             >
               Login
             </a>

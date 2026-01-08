@@ -117,6 +117,7 @@ const ClientOrderDetailModal = ({ order, onClose }) => {
               <thead className="bg-red-600 text-white">
                 <tr>
                   <th className="p-2 text-left">Item Name</th>
+                  <th className="p-2 text-left">Canteen Name</th>
                   <th className="p-2 text-left">Qty</th>
                   <th className="p-2 text-left">Price</th>
                   <th className="p-2 text-left">Status</th>
@@ -137,6 +138,7 @@ const ClientOrderDetailModal = ({ order, onClose }) => {
                       />
                       <span>{item.menu_name}</span>
                     </td>
+                    <td className="p-2">{item.canteen_name}</td>
                     <td className="p-2">{item.menu_quantity}</td>
                     <td className="p-2">{item.menu_total_price}</td>
                     <td className="p-2">

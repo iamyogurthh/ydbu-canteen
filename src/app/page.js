@@ -65,7 +65,7 @@ const CanteensPage = () => {
           }}
         >
           {/* Overlay */}
-          <div className="absolute inset-0 bg-black/60"></div>
+          <div className="absolute inset-0 bg-black/14"></div>
 
           {/* Content */}
           <div className="relative flex flex-col items-center justify-center h-full px-4 py-10 md:py-30">

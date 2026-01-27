@@ -122,7 +122,7 @@ const page = () => {
       backgroundSize: 'cover', 
       backgroundPosition: 'center',
     }}>
-      <div className="bg-white/90 p-[50px] rounded-[24px] shadow-lg " >
+      <div className="bg-white/90 p-[50px] rounded-[24px] shadow-lg mr-[200px]" >
         <div className="flex items-center justify-center">
           <h1 className="text-[48px] font-medium mr-[16px]">Welcome To</h1>
           <div className="text-left">

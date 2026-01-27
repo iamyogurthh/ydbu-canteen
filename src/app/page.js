@@ -68,6 +68,9 @@ const CanteensPage = () => {
           <div className="absolute inset-0 bg-black/14"></div>
 
           {/* Content */}
+          <h2 className="text-black text-2xl md:text-3xl font-bold mt-4 text-center">
+              Yadanarbon University
+            </h2>
           <div className="relative flex flex-col items-center justify-center h-full px-4 py-10 md:py-30">
             <h2 className="text-white text-2xl md:text-3xl font-semibold mb-4 text-center">
               Find Your Favorite Canteen

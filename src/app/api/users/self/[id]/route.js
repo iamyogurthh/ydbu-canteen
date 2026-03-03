@@ -46,6 +46,7 @@ export async function PUT(req, { params }) {
 
 }
 
+// I need to change this
 export async function DELETE(request, { params }) {
     const { id } = await params;
     const isok = await deleteUserById(id);

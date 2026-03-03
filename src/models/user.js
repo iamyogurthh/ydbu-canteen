@@ -1,4 +1,5 @@
 import pool from "@/database/database";
+import { deleteCanteenById } from "./canteen";
 
 export async function getAllUsers() {
     const [users] = await pool.query(`SELECT * FROM user`)
@@ -94,6 +95,21 @@ export async function updateUser(id, ph_no,
 }
 
 export async function deleteUserById(id) {
+    const user = await getUserById(id);
+    if (!user) {
+        return false
+    }
+    if (user.role_id == 2) {
+        let canteen_id = user.canteen_id;
+        const ok = await deleteCanteenById(canteen_id)
+        if (ok) {
+            const [result] = await pool.query(`
+            DELETE FROM User WHERE id=?
+            `, [id]);
+            return result.affectedRows > 0;
+        }
+        return false;
+    }
     const [result] = await pool.query(`
     DELETE FROM User WHERE id=?
     `, [id]);

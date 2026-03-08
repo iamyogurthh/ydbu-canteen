@@ -159,6 +159,7 @@ const ShopDashboardPage = () => {
 
   return (
     <div className="pt-[40px] px-[40px]">
+      <h1 className='text-4xl text-red-500 font-bold'>{session.user.canteen_name}</h1>
       <div className="flex justify-center mb-4">
         <SearchBox
           onSearch={debouncedSearch}

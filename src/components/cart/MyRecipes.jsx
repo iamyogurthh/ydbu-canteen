@@ -11,18 +11,18 @@ const MyRecipes = () => {
   return (
     <div className="bg-white rounded-[8px] shadow-md py-[16px] px-[40px] w-full md:w-[40%]">
       <div className="flex items-center justify-center mb-[24px] pb-[16px] border-b-[2px] border-[#DDDDDD]">
-        <h1 className="text-[24px] text-accent">My Recipes</h1>
+        <h1 className="text-[24px] text-accent">My Bill</h1>
       </div>
       <div className="border-b-[2px] border-[#DDDDDD] pb-[160px]">
         <p className="font-bold">
-          Sub Total:{' '}
+          Total:{' '}
           <span className="font-medium ml-[40px]">{totalPrice} MMK</span>
         </p>
       </div>
       <div className="my-[40px]">
-        <p className="font-bold">
+        {/* <p className="font-bold">
           Total: <span className="font-medium ml-[40px]">{totalPrice} MMK</span>
-        </p>
+        </p> */}
       </div>
       <div className="flex items-center justify-center">
         <Link
